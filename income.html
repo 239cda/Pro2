@@ -39,11 +39,11 @@
 			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		id: 'mapbox.light'
 	}).addTo(Imap);
-
-	var Igeojson = L.IgeoJson(statesData).addTo(map);
-        var Iresponse = requests.get("http://api.open-notify.org/iss-now.json")
+    var Iresponse = requests.get("http://api.open-notify.org/iss-now.json")
 	console.log(Iresponse.status);
 console.log(Iresponse.statusText);
+	var Igeojson = L.IgeoJson(statesData).addTo(map);
+    
 </script>
 
 
