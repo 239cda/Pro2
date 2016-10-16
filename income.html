@@ -15,8 +15,8 @@
 
 	<style>
 		#map {
-			width: 600px;
-			height: 400px;
+			width: 1000px;
+			height: 800px;
 		}
 	</style>
 
@@ -41,7 +41,7 @@
 	}).addTo(map);
 
 	var geojson = L.geoJson(statesData).addTo(map);
-
+        var response = requests.get("http://api.open-notify.org/iss-now.json")
 </script>
 
 
