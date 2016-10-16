@@ -39,9 +39,13 @@
 			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		id: 'mapbox.light'
 	}).addTo(Imap);
-    var Iresponse = requests.get("http://api.open-notify.org/iss-now.json")
-	console.log(Iresponse.status);
-console.log(Iresponse.statusText);
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://www.codecademy.com/", false);
+// Add your code below!
+xhr.send();
+console.log(xhr.status);
+console.log(xhr.statusText);
+
 	var Igeojson = L.IgeoJson(statesData).addTo(map);
     
 </script>
