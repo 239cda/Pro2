@@ -27,7 +27,8 @@
 <div id='map'></div>
 
 <script type="text/javascript" src="https://239cda.github.io/Pro2/statesData.js"></script>
-
+<script type="text/javascript" src="http://api.census.gov/data/2015/acs1?get=NAME,B01001_001E&for=state:*&key="></script>
+	
 <script type="text/javascript">
 
 	var Imap = L.map('map').setView([37.8, -96], 4);
@@ -39,9 +40,9 @@
 			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		id: 'mapbox.light'
 	}).addTo(Imap);
-
-
 	var Igeojson = L.geoJson(statesData).addTo(Imap);
+	var I = eval("NAME");
+	console.log(I);
     
 </script>
 
