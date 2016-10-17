@@ -51,7 +51,7 @@ oReq.addEventListener("load", reqListener);
 oReq.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B01001_001E&for=state:*&key=");
 oReq.send();	
 	
-var a = reqListener.responseText;
+var a = oReq.responseText;
     console.log(a);
 </script>
 
