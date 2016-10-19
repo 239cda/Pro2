@@ -71,7 +71,7 @@ function IpassData () {
 //query a data
 var Irequest = new XMLHttpRequest();
 Irequest.addEventListener("load", IpassData);
-Irequest.open("GET", "http://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=");
+Irequest.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=");
 Irequest.send();
 	
 //color mapping
