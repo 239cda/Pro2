@@ -2,7 +2,7 @@
 <html>
 <head>
 	
-	<title>Income chart</title>
+	<title>Choropleth Tutorial - Leaflet</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +65,7 @@ function IpassData () {
   }
 //identify maximum and minimum value and pass them to variables then scale down to value between 0 and 255
   getRGB();
-  console.log(storeBvalue)
+  
 }
 
 //query a data
@@ -96,20 +96,23 @@ var IscaleB = d3.scale.linear()
           storeRvalue[i] = IscaleR(numberedIdata[i]);
 	      storeBvalue[i] = IscaleB(numberedIdata[i]);
      }
-  }			 
 
+  }			 
+console.log(storeRvalue)
 function style(storeRvalue, storeBvalue) {
+console.log(storeRvalue)
+console.log(storeBvalue)
 		return {
 			weight: 2,
 			opacity: 1,
 			color: 'white',
 			dashArray: '3',
 			fillOpacity: 0.7,
-			fillColor: "rgb(" + storeRvalue+ "," + 100 + "," + storeBvalue + ")"
+			fillColor: "rgb(" + storeRvalue+ "," + 255 + "," + storeBvalue + ")"
 		};
 	}
-
 var Igeojson = L.geoJson(statesData,{style: style(storeRvalue, storeBvalue),}).addTo(Imap);	
+
 
 
 </script>
