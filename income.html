@@ -65,6 +65,7 @@ function IpassData () {
   }
 //identify maximum and minimum value and pass them to variables then scale down to value between 0 and 255
   getRGB();
+	var Igeojson = L.geoJson(statesData,{style: style(storeRvalue, storeBvalue),}).addTo(Imap);	
   
 }
 
@@ -111,7 +112,7 @@ console.log(storeBvalue)
 			fillColor: "rgb(" + storeRvalue+ "," + 255 + "," + storeBvalue + ")"
 		};
 	}
-var Igeojson = L.geoJson(statesData,{style: style(storeRvalue, storeBvalue),}).addTo(Imap);	
+
 
 
 
