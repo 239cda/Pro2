@@ -1,124 +1,354 @@
 <!DOCTYPE html>
-<html>
-<head>
-	
-	<title>Income map</title>
+<meta charset="utf-8">
+<style>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
-
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> 
-
-	<style>
-		#map {
-			width: 1000px;
-			height: 800px;
-		}
-	</style>
-
-	
-</head>
-<body>
-
-<div id='map'></div>
-
-<script type="text/javascript" src="https://239cda.github.io/Pro2/statesData.js"></script>
-<script id = '1' type="text/javascript" src="https://api.census.gov/data/2015/acs1?get=NAME,B01001_001E&for=state:*&key="></script>
-	
-<script type="text/javascript">
-	var Imap = L.map('map').setView([37.8, -96], 4);
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		id: 'mapbox.light'
-	}).addTo(Imap);
-	
-//here starts getting the data
-//first make a variable that will store all the data concerning median income
-//then a function that gets data from api and passes to that variable
-//then make an if statement that evaluates income parameter for each locality
-//and give color value 
-
-var Idata = [];
-//Idata is an array containing all information like area code and value and state/
-//numberedIdata == only median income (numbered)
-var numberedIdata = [];
-//var Imax = 0;
-//var Imin = 0;
-var storeRvalue = [];
-var storeBvalue = [];
-
-//function for passing data into an array variable
-function IpassData () {
-  var arrayForData = eval(this.responseText);
-  //console.log(arrayForData);
-  //removing first and last(puerto rico)
-  for (i=1;i<52; i++){
-	  Idata.push(arrayForData[i])
-	  numberedIdata.push(Number(arrayForData[i][1]))  
-  }
-//identify maximum and minimum value and pass them to variables then scale down to value between 0 and 255
-  getRGB();
-	var Igeojson = L.geoJson(statesData,{style: style(storeRvalue, storeBvalue),}).addTo(Imap);	
-  
+.counties {
+  fill: none;
+}
+.color {
+  fill: #0000ff	
+}
+#selectedCounty:hover{
+  fill: #ffda21;
+}
+#selectedState:hover{
+fill: #ffda21;
 }
 
-//query a data
+.selectedArea{
+fill: #ffda21;
+}
+
+.states {
+  fill: none;
+  stroke: #000000;
+  stroke-linejoin: round;
+}
+.statesC {
+  fill: none;
+  stroke: #666666;
+  stroke-width: .5px;
+  stroke-linejoin: round;
+}
+
+.county-boundary {
+  fill: none;
+  stroke: #000000;
+  stroke-width: .5px;
+}
+.land {
+  fill: #f7f7f7;
+  stroke: #000000; 
+  stroke-width: .5px;
+}
+.state-boundary {
+  fill: none;
+  stroke: #000000;
+}
+.q1 { fill:rgb(247,251,255); }
+.q2 { fill:rgb(222,235,247); }
+.q3 { fill:rgb(198,219,239); }
+.q4 { fill:rgb(158,202,225); }
+.q5 { fill:rgb(107,174,214); }
+.q6 { fill:rgb(66,146,198); }
+.q7 { fill:rgb(33,113,181); }
+.q8 { fill:rgb(8,81,156); }
+.q9 { fill:rgb(8,48,107); }
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+
+
+<select id="countySelectBox" name = "selectBox" style="position: absolute; left: 1280px; top: 260px">
+<option selected="selected" hidden >---select a county---</option>
+<input type="radio" id ="choroState" name ="radio" onclick = "choroStateOn();" value="bar" checked style="position: absolute; left: 1065px; top: 140px"> 
+<input type="radio" id ="choroCounty" name ="radio" onclick = "choroCountyOn();" value="bar" style="position: absolute; left: 1065px; top: 160px">
+<select id="stateSelectBox" name = "selectBox" style="position: absolute; left: 1080px; top: 260px">
+<option selected="selected" hidden >---select a state---</option>
+<script>
+
+var width = 1500,
+    height = 800;
+
+var projection = d3.geo.albersUsa()
+    .scale(1200)
+    .translate([width / 2 - 150, height / 2 - 100]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+	
+//Idata is an array containing all information like area code and value and state/
+var Idata = [];
+//all information from api data for county
+var IdataCounty = [];
+//array containing state number)
+//LATER, It is replaced with values of concat of IdatacountyID and IdatacountyID2 
+var IdataCountyID = [];
+//array containing county number
+var IdataCountyID2 = [];
+//array containing data from unemployment.tsv <-- used to compare with IdataCountyID to determine which county gets color
+var IdataEm = [];
+
+//numberedIdata == only median income (numbered) for state
+var numberedIdata = [];	
+
+//median income for county
+var numberedIdataCounty = [];
+
+//selection box options
+var stateNames = [];
+var countyNames = [];
+
+
+//function for state data
 var Irequest = new XMLHttpRequest();
 Irequest.addEventListener("load", IpassData);
-Irequest.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=");
-Irequest.send();
-	
-//color mapping
-//Idata is the array of data, and the value is in [1]
-//get the maximum and minimum value and divide it in appropriate intervals
-//blue green for low income and yellow for high income; change saturation according to the value
+Irequest.open("GET", "http://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
+Irequest.send();   	
 
-//function for identify maximum and minimum value and pass them to variables then scale down to value between 0 and 255
-function getRGB ()  {
-  var Imax = Math.max.apply(null, numberedIdata)
-  var Imin = Math.min.apply(null, numberedIdata)
-//scale for r value 
-var IscaleR = d3.scale.linear()
-             .domain([Imin,Imax])
-             .range([0,255]);
-//scale for b value
-var IscaleB = d3.scale.linear()
-             .domain([Imin,Imax])
-             .range([255,0]);
+//function for county data
+var IrequestCounty = new XMLHttpRequest();
+IrequestCounty.addEventListener("load", IpassDataCounty);
+IrequestCounty.open("GET", "http://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
+IrequestCounty.send();  
 
-     for (var i = 0; i < numberedIdata.length; i++) {
-          storeRvalue[i] = IscaleR(numberedIdata[i]);
-	      storeBvalue[i] = IscaleB(numberedIdata[i]);
-     }
+//call tsv data in order to compare with county data to determine which states get colored
+d3.queue()
+  .defer(d3.tsv, "http://239cda.github.io/Pro2/data.tsv", function(data) {
+  IdataEm.push(data)})	
 
-  }			 
-console.log(storeRvalue)
-function style(storeRvalue, storeBvalue) {
-console.log(storeRvalue)
-console.log(storeBvalue)
-		return {
-			weight: 2,
-			opacity: 1,
-			color: 'white',
-			dashArray: '3',
-			fillOpacity: 1,
-			fillColor: "rgb(" + storeRvalue+ "," + 255 + "," + storeBvalue + ")"
-		};
+
+//call each id data in IdataEm and compare with id data in IdataCounty
+//it IdataCounty does not equal that of IdataEm, add "NA" until it matches that value
+//conat id and state for CountyID
+
+//if IdataCountyID가 10 이전이면 앞의 0 떼고
+//아니면 걍 그대로 컨켓을 해서
+//아래에 내려가서 이게 저쪽 데이터랑 = 이면 색칠하고 아니면 말아라.
+function concat (IdataCountyID, IdataCountyID2) {
+     for (i=0; i<IdataCountyID.length;i++){
+	     if (Number(IdataCountyID[i]) < 10 ) {IdataCountyID[i] = Number(IdataCountyID[i]) + IdataCountyID2[i]}
+         else {IdataCountyID[i] = IdataCountyID[i] + IdataCountyID2[i]}		 
+	 }
+}
+function compare (IdataCountyID, IdataEm){
+     for (i=0; i<IdataEm.length; i++){
+	     if (IdataEm[i].id == IdataCountyID[i]) {}
+         else {IdataCountyID.splice(i, 0, "NA")}			 
 	}
+}
+
+function compareColorValue (storage,IdataCountyID){
+     for (i=0; i<IdataCountyID.length; i++){
+	     if (IdataCountyID[i] == "NA") {storage.splice(i, 0, "NA")}			 
+	}
+}
+
+//variable for checking if choropleth is for state level or county level
+var stateOrCounty = 1;
+
+function IpassData () {
+  var arrayForData = eval(this.responseText);
+  //removing first and last(puerto rico)
+  for (i=1;i<52; i++){
+	  numberedIdata.push(arrayForData[i][1]) 
+	  //also push state names for selection box
+	  stateNames.push(arrayForData[i][0]);
+  }stateNames.splice(0,0,0);
+  var storage = [];
+  var Icolor = d3.scale.linear()
+    .domain([d3.min(numberedIdata), d3.max(numberedIdata)])
+    .range([1, 9])
+for (i=0; i<numberedIdata.length; i++) {
+    storage[i] = "q"+d3.round(Icolor(numberedIdata[i]))
+};
+d3.select('#stateSelectBox').selectAll('option').data(stateNames).enter().append('option')
+	.html(function(d) { return d; })
+	.attr('value', function(d) {return d; })
+    json();
+}
+//THE GOAL: select one state -> only shows counties in that state
+//THE PROBLEM : county variable stored as "county, state"
+//1. convert it to an array so that it looks like [0][0] = A county [0][1] = A state
+//   -----> then can call only those counties that belong to that state 
+//TO DO THAT : 
+//use split method first to store values like ["county a", "state a", "county b", "state b"..]
+//then create an object with property countyNameObject and stateNameObject and store odd number value to first and 
+//even number values to the latter property
+//let's try............... just up to this point....
+//well, it just made a subarray for each location. will be just using subarrays then, instead of objects.
+
+function splitCountyState(countyNames) {
+    for (i = 0; i<countyNames.length; i++) {
+	countyNames[i] = countyNames[i].split(",");
+}
+}
+
+function IpassDataCounty () {
+  var arrayForData = eval(this.responseText);
+  //removing first and last(puerto rico)
+  for (i=1;i<arrayForData.length - 11; i++){
+	  IdataCounty.push(arrayForData[i])
+	  numberedIdataCounty.push(Number(arrayForData[i][1]))
+      IdataCountyID.push(arrayForData[i][2])
+	  IdataCountyID2.push(arrayForData[i][3])
+	  countyNames.push(arrayForData[i][0])
+  }
+  splitCountyState(countyNames)
+  concat(IdataCountyID, IdataCountyID2);
+  compare(IdataCountyID, IdataEm);
+/*d3.select('#countySelectBox').selectAll('option').data(countyNames).enter().append('option')
+	.html(function(d) { return d; })
+	.attr('value', function(d) { return d; })*/
+}
+//runs when radiobutton for states is checked
+function choroStateOn(){
+	d3.selectAll('path').remove();
+    stateOrCounty = 1;
+	json();
+}
+//runs when radiobutton for county is checked
+function choroCountyOn(){
+	d3.selectAll('path').remove();
+    stateOrCounty = 2;
+	json();
+}
+
+function json() {d3.json("http://239cda.github.io/Pro2/us.json", function(error, us) {
+
+  svg.insert("path", ".graticule")
+      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .attr("class", "state-boundary")
+      .attr("d", path);
+	  
+//this one for counties		  
+//If have time: make other counties (below 65K) selectable too, only show county name.
+if (stateOrCounty == 2) {
+  var storage = [];
+  var Icolor = d3.scale.linear()
+    .domain([d3.min(numberedIdataCounty), d3.max(numberedIdataCounty)])
+    .range([1, 9])
+for (i=0; i<numberedIdataCounty.length; i++) {
+    storage[i] = "q"+d3.round(Icolor(numberedIdataCounty[i]))
+};compareColorValue(storage, IdataCountyID);
+
+    svg.insert("path", ".graticule")
+      .datum(topojson.mesh(us, us.objects.counties, function(a, b) { return a !== b && !(a.id / 1000 ^ b.id / 1000); }))
+      .attr("class", "county-boundary")
+      .attr("d", path); 
+	  
+    svg.append("g")
+      .attr("class", "counties")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.counties).features)
+    .enter().append("path")
+	  .attr("class", function(d, i) {return storage[i];}) //this is where color goes in
+	  .attr("id", "selectedCounty")
+      .attr("d", path);
+	  
+  svg.append("g")
+      .attr("class", "statesC")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.states).features)
+    .enter().append("path")
+	  .attr("stroke-width", 1)
+	  .attr("stroke","#666666" )
+      .attr("d", path);  
+}	  
+else if(stateOrCounty == 1){
+var storage = [];
+  var Icolor = d3.scale.linear()
+    .domain([d3.min(numberedIdata), d3.max(numberedIdata)])
+    .range([1, 9])
+for (i=0; i<numberedIdata.length; i++) {
+    storage[i] = "q"+d3.round(Icolor(numberedIdata[i]))
+};
+//this one for states	  
+   svg.append("g")
+      .attr("class", "states")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.states).features)
+    .enter().append("path")
+	  .attr("class", function(d, i) {return storage[i];})
+	  .attr("stroke-width", 1)
+	  .attr("stroke","#666666" )
+	  .attr("id", "selectedState")
+      .attr("d", path);
+}
+//aaa(300);
+
+ 
+})};
 
 
+//function for adding county selection box contents according to the state selection box input
+d3.select("#stateSelectBox")
+				   .on('change', function(){
+				   // clear the contents of the chart
+						d3.select('#countySelectBox').selectAll('option').remove();
 
+						// figure out the newly selected enegy type, region, chart type
+						var selection = document.getElementById('stateSelectBox');
+						var selectedStateValue = selection.options[selection.selectedIndex].value;
+                        var selectedStateIndex = document.getElementById('stateSelectBox').selectedIndex;
+
+						var storeCountyName = [];	
+
+						for (i = 0; i<countyNames.length; i++) {
+						countyNames[i][1] = countyNames[i][1].trim();
+						}
+						for (i= 0; i<countyNames.length; i++){
+							  if (selectedStateValue == countyNames[i][1]) 
+							  {storeCountyName.push(countyNames[i][0])}
+						}
+						//compare between selectedStatevalue and [i][1]of countyNames
+						    d3.select('#countySelectBox').selectAll('option')
+							  .data(storeCountyName)
+							  .enter().append('option')
+	                          .html(function(d) { return d; })
+	                          .attr('value', function(d) { return d; })	
+							  
+						aaa();          
+						function aaa() {d3.json("http://239cda.github.io/Pro2/us.json", function(error, us) {
+								svg.append("g")
+								.selectAll("path")
+								.data(topojson.feature(us, us.objects.states.geometries[selectedStateIndex]))
+								.enter().append("path")
+								.attr("class", "selectedArea")
+								.attr("d", path);
+								console.log(topojson.feature(us, us.objects.states).features)
+								console.log(topojson.feature(us, us.objects.states.geometries[selectedStateIndex]))
+								//console.log(topojson.feature(us, us.objects.states.geometries[selectedStateIndex]))
+							   })
+							   }
+						//here is the functin for coloring selected state.
+						//1. get index value of the selected state (bc the order should be the same for state drawing json)
+						/*d3.json("http://239cda.github.io/Pro2/us.json",function(error, us) {
+						   var aaaa = us.objects.states.geometries[selectedStateIndex];
+						 //console.log(aaa)
+						 //console.log(topojson.feature(us, us.objects.states.geometries[selectedStateIndex]))
+						 //console.log(topojson.feature(us, us.objects.states).features)
+							svg.insert("path")
+							   .selectAll("path")
+							   .data(topojson.feature(us, us.objects.states).features)
+							   //.data(topojson.feature(us, aaa))
+                               //.data(topojson.feature(us, us.objects.states.geometries[selectedStateIndex]))
+                               .enter().append("path")
+							   .attr("id", "selectedArea")
+                               .attr("d", path);
+							
+
+							})*/
+						})
+
+d3.select(self.frameElement).style("height", height + "px");
 
 </script>
-
-
-
-</body>
-</html>
