@@ -122,7 +122,7 @@ IrequestCounty.send();
 
 //call tsv data in order to compare with county data to determine which states get colored
 d3.queue()
-  .defer(d3.tsv, "http://239cda.github.io/Pro2/data.tsv", function(data) {
+  .defer(d3.tsv, "https://239cda.github.io/Pro2/data.tsv", function(data) {
   IdataEm.push(data)})	
 
 
@@ -222,7 +222,7 @@ function choroCountyOn(){
 	json();
 }
 
-function json() {d3.json("http://239cda.github.io/Pro2/us.json", function(error, us) {
+function json() {d3.json("https://239cda.github.io/Pro2/us.json", function(error, us) {
 
   svg.insert("path", ".graticule")
       .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
