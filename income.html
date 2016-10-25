@@ -111,13 +111,13 @@ var countyNames = [];
 //function for state data
 var Irequest = new XMLHttpRequest();
 Irequest.addEventListener("load", IpassData);
-Irequest.open("GET", "http://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
+Irequest.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
 Irequest.send();   	
 
 //function for county data
 var IrequestCounty = new XMLHttpRequest();
 IrequestCounty.addEventListener("load", IpassDataCounty);
-IrequestCounty.open("GET", "http://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
+IrequestCounty.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B19013_001E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138");
 IrequestCounty.send();  
 
 //call tsv data in order to compare with county data to determine which states get colored
