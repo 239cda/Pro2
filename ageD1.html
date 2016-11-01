@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.menu {
+fill: #8C8C8C;
+font-size: 30px;
+font-family: SF UI Text (Medium); 
+}
+.submenu1{
+fill: #8C8C8C;
+font-size: 18px;
+}
+.submenu2{
+fill: #8C8C8C;
+font-size: 18px;
+}
+.counties {
+  fill: none;
+}
+.color {
+  fill: #0000ff	
+}
+#selectedCounty:hover{
+  fill: #ffda21;
+}
+#selectedState:hover{
+fill: #ffda21;
+}
+
+.selectedArea{
+fill: #ffda21;
+}
+
+.states {
+  fill: none;
+  stroke: #000000;
+  stroke-linejoin: round;
+}
+.statesC {
+  fill: none;
+  stroke: #666666;
+  stroke-width: .5px;
+  stroke-linejoin: round;
+}
+
+.county-boundary {
+  fill: none;
+  stroke: #000000;
+  stroke-width: .5px;
+}
+.land {
+  fill: #f7f7f7;
+  stroke: #000000; 
+  stroke-width: .5px;
+}
+.state-boundary {
+  fill: none;
+  stroke: #000000;
+}
+.axis path, 
+.axis line {
+			fill: none;
+			stroke: grey;
+			shape-rendering: crispEdges;
+}.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+
+.tick text {
+			fill: black;
+			font-size: 11px;
+		}
+.hidden {
+        display: none;
+    }
+div.tooltip {
+        color: #222;
+        background-color: #fff;
+        padding: .5em;
+        text-shadow: #f5f5f5 0 1px 0;
+        border-radius: 2px;
+        opacity: 0.9;
+        position: absolute;
+}
+#tooltip {
+				position: absolute;
+				width: 200px;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+			
+			#tooltip.hidden {
+				display: none;
+			}
+			
+			#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 16px;
+				line-height: 20px;
+			}
+
+
+
+
+.q1 { fill:rgb(197, 171, 226);}
+.q2 { fill:rgb(183, 155, 217);}
+.q3 { fill:rgb(170, 139, 207);}
+.q4 { fill:rgb(157, 123, 198);}
+.q5 { fill:rgb(143, 107, 188);}
+.q6 { fill:rgb(130, 91, 178);}
+.q7 { fill:rgb(116, 75, 169);}
+.q8 { fill:rgb(103, 59, 159);}
+.q9 { fill:rgb(90, 44, 150);}
+
+</style>
+<body>
+<div id="tooltip" class="hidden">
+			<p><span id="locationName"><strong>STATE NAME NAME NAME </strong></span></p>
+			<p><span id="value">100</span></p>
+		</div>
+
+<!--"compare" icon-->
+<img src="https://239cda.github.io/Pro2/compare icon .png" style="position: absolute; left: 1400px; top: 300px">
+<img src="https://239cda.github.io/Pro2/compare icon selected.png" onclick="javascript:goToCompare();" style="position: absolute; left: 1400px; top: 300px">
+
+<!--logo-->
+
+<img src="https://239cda.github.io/Pro2/Logo.png" style="position: absolute; left: 80px; top: 30px">
+
+<!--go back button-->
+<a href= "http://pages.iu.edu/~nalghamd/maps/firstpage.html">
+<img src="https://239cda.github.io/Pro2/Back.png" style="position: absolute; left: 10px; top: 400px"></a>
+
+<!--legends-->
+<img src="https://239cda.github.io/Pro2/age distribution legend.png" style="position: absolute; left: 1250px; top: 700px">
+
+<!--labels for bar chart-->
+<text id='bar1' class = 'label' style= "position: absolute; left: 1260px; top: 660px"></text>
+<text id='bar2' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
+
+<!--labels for radio buttons-->
+<text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
+<text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
+
+<!--menu buttons on top-->
+<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
+<text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
+<text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
+<text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
+
+<!--submenu buttons on top-->
+<text id='totalD' class = 'submenu1' onclick = "population();" style= "display:none;cursor:pointer; position: absolute; left: 250px; top: 100px">Total Population</text>
+<text id='AgeD' class = 'submenu1' onclick = "femaleAgeDistribution();" style= "display:none; cursor:pointer; position: absolute; left: 450px; top: 100px">Age Distribution</br>by Sex</text>
+<text id='MedianD' class = 'submenu1' onclick = "totalMedianAge();" style= "display:none; cursor:pointer; position: absolute; left: 650px; top: 100px">Median Age</br>by Sex</text>
+<text id='RaceD' class = 'submenu1' onclick = "race();" style= "display:none; cursor:pointer; position: absolute; left: 850px; top: 100px">Race</text>
+<text id='educationD' class = 'submenu1' onclick = "education();" style= "display:none; cursor:pointer;position: absolute; left: 1000px; top: 100px">Education</br>Attainment</text>
+
+<text id='medianH' class = 'submenu2' onclick = "medianH();" style= "display:none;cursor:pointer; position: absolute; left: 450px; top: 100px">Median Household</br>Income</text>
+<text id='perC' class = 'submenu2' onclick = "perC();" style= "display:none; cursor:pointer; position: absolute; left: 650px; top: 100px">Per Capita</br>Income</text>
+<text id='incomeR' class = 'submenu2' onclick = "incomeR();" style= "display:none; cursor:pointer; position: absolute; left: 850px; top: 100px">Income to</br>Poverty Ratio</text>
+<text id='povertyLevel' class = 'submenu2' onclick = "povertyLevel();" style= "display:none; cursor:pointer; position: absolute; left: 1050px; top: 100px">Poverty Level by</br>Place of Birth</text>
+
+<!--radio buttons and dropdown box-->
+<select disabled id="countySelectBox" name = "selectBox" style="position: absolute; left: 1400px; top: 260px">
+<option selected="selected" hidden >---select a county---</option></select>
+<input type="radio" id ="choroState" name ="radioChoro" onclick = "choroStateOn();" value="bar" checked style="position: absolute; left: 1230px; top: 200px"> 
+<input type="radio" id ="choroCounty" name ="radioChoro" onclick = "choroCountyOn();" value="bar" style="position: absolute; left: 1330px; top: 200px">
+<!--implement this if have time
+<input type="radio" id ="totalAgeRadio" name ="radioData" onclick = "totalAgeDistribution();" value="bar" style="position: absolute; left: 1200px; top: 200px">
+-->
+<select id="stateSelectBox" name = "selectBox" style="position: absolute; left: 1230px; top: 260px">
+<option selected="selected" hidden >---select a state---</option></select>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src="https://d3js.org/d3-request.v1.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js"></script>
+
+<script>
+
+var width = 1500,
+    height = 1000;
+
+var projection = d3.geo.albersUsa()
+    .scale(1200)
+    .translate([width / 4 + 100, height / 2 - 50]);
+
+var path = d3.geo.path()
+    .projection(projection);
+	
+var tooltip = d3.select('body').append('div')
+            .attr('class', 'hidden tooltip');
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+	
+//Idata is an array containing all information like area code and value and state/
+var Idata = [];
+//all information from api data for county
+var IdataCounty = [];
+//array containing state number)
+//LATER, It is replaced with values of concat of IdatacountyID and IdatacountyID2 
+var IdataCountyID = [];
+//array containing county number
+var IdataCountyID2 = [];
+//array containing data from unemployment.tsv <-- used to compare with IdataCountyID to determine which county gets color
+//var IdataEm = [];
+
+
+//all the county data with NOT CONCATED IDs
+var backUpIdataCounty = [];
+//numberedIdata == only median income (numbered) for state
+var numberedIdata = [];	
+//median income for county
+var numberedIdataCounty = [];
+
+var medianCountyData = null;
+var medianStateData = null;
+
+var totalDataByAgeGroup = [];
+var totalDataByAgeGroupCounty = [];
+
+//selection box options
+var stateNames = [];
+//beware...this below one has array for each id. 
+var countyNames = [];
+var countyNamesOnly = [];
+var stateIdNumber = [];
+var countyIDForToolTip = [];
+
+//total county ID in jason
+var totalCountyID = [];	  
+//order of ID changed according to json order
+
+var rearrangedCountyID = [];
+var rearrangedIdataCounty = [];
+
+var totalCountiesCompareSplit = [];
+
+var totalPM = [];
+var totalPF = [];
+var totalPCountyM = [];
+var totalPCountyF = [];
+//variables for each age group
+age9 = [];
+age19 = [];
+age29 = [];
+age39 = [];
+age49 = [];
+age59 = [];
+age69 = [];
+age79 = [];
+age85 = [];
+
+age9c = [];
+age19c = [];
+age29c = [];
+age39c = [];
+age49c = [];
+age59c = [];
+age69c = [];
+age79c = [];
+age85c = [];
+
+
+function IpassPopData (error, results) {
+var arrayForData = eval(results[0].responseText);
+var arrayForDataF = eval(results[1].responseText);
+  //removing first and last(puerto rico)
+  for (i=1;i<52; i++){
+	  stateNames.push(arrayForData[i][0]);
+	  stateIdNumber.push(Number(arrayForData[i][2]));
+	  totalPM.push(Number(arrayForData[i][1]))
+	  totalPF.push(Number(arrayForDataF[i][1]))
+  }stateNames.splice(0,0,0);
+d3.select('#stateSelectBox').selectAll('option').data(stateNames).enter().append('option')
+	.html(function(d) { return d; })
+	.attr('value', function(d) {return d; })
+}
+function IpassPopDataCounty (error, results) {
+  var arrayForData = eval(results[0].responseText);
+  var arrayForDataF = eval(results[1].responseText);
+  //removing first and last(puerto rico)
+  for (i=1;i<arrayForData.length - 11; i++){
+      IdataCountyID.push(arrayForData[i][2])
+	  IdataCountyID2.push(arrayForData[i][3])
+	  countyNames.push(arrayForData[i][0])
+	  totalPCountyM.push(Number(arrayForData[i][1]))
+	  totalPCountyF.push(Number(arrayForDataF[i][1]))
+  }
+  splitCountyState(countyNames)
+  concat(IdataCountyID, IdataCountyID2);
+  IdataCountyRearrage();
+  
+}
+function prepareVariables() {
+//state data for male and female
+     d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_002E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_026E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+          .awaitAll(IpassPopData)
+	 d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_002E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_026E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+          .awaitAll(IpassPopDataCounty)	  
+}
+//function for state data
+function maleAgeDistribution (){
+needNormalize = true;
+     d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_005E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_006E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_007E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_008E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_009E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combine
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_010E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_011E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_012E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_013E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_014E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_015E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_016E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_017E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_018E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_019E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_020E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_021E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_022E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_023E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_024E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_025E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .awaitAll(calculateData);
+}		  
+function maleAgeDistributionCounty (){
+	d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_005E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_006E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_007E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_008E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_009E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_010E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_011E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_012E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_013E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_014E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_015E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_016E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_017E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_018E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_019E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_020E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_021E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_022E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_023E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_024E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_025E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .awaitAll(calculateDataCounty);	  	  
+}
+
+function femaleAgeDistribution (){
+needNormalize = true;
+     d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_029E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_030E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_031E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_032E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_033E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_034E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_035E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_036E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_037E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_038E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_039E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_040E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_041E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_042E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_043E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_044E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_045E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_046E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_047E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_048E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_049E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .awaitAll(calculateData);
+}		  
+function femaleAgeDistributionCounty(){
+	d3.queue()
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_029E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_030E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_031E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_032E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_033E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_034E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_035E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_036E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_037E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_038E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_039E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_040E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_041E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_042E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_043E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_044E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_045E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_046E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_047E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  //above should be combined
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_048E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_049E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .awaitAll(calculateDataCounty);	  
+		 		  
+}
+
+//call tsv data in order to compare with county data to determine which states get colored
+/*d3.queue()
+  .defer(d3.tsv, "https://239cda.github.io/Pro2/data.tsv", function(data) {
+  IdataEm.push(data)})	
+*/
+
+//call each id data in IdataEm and compare with id data in IdataCounty
+//it IdataCounty does not equal that of IdataEm, add "NA" until it matches that value
+//conat id and state for CountyID
+
+//if IdataCountyID가 10 이전이면 앞의 0 떼고
+//아니면 걍 그대로 컨켓을 해서
+//아래에 내려가서 이게 저쪽 데이터랑 = 이면 색칠하고 아니면 말아라.
+function concat (IdataCountyID, IdataCountyID2) {
+     for (i=0; i<IdataCountyID.length;i++){
+	     if (Number(IdataCountyID[i]) < 10 ) {IdataCountyID[i] = Number(IdataCountyID[i]) + IdataCountyID2[i]}
+         else {IdataCountyID[i] = IdataCountyID[i] + IdataCountyID2[i]}	
+         countyIDForToolTip.push(Number(IdataCountyID[i]))		 
+	 }
+}
+
+
+function compareColorValue (storage, rearrangedCountyID){
+//console.log(rearrangedCountyID)
+//console.log(storage)
+//find the index of countyID in Rearranged countyID 
+//then move storage value to that indexForStorage
+
+for (i=0; i<rearrangedCountyID.length; i++){
+	     if (rearrangedCountyID[i] == "NA") {storage.splice(i, 0, "NA")}			 
+	}
+}
+
+
+
+//variable for checking if choropleth is for state level or county level
+var stateOrCounty = 1;
+
+
+//THE GOAL: select one state -> only shows counties in that state
+//THE PROBLEM : county variable stored as "county, state"
+//1. convert it to an array so that it looks like [0][0] = A county [0][1] = A state
+//   -----> then can call only those counties that belong to that state 
+//TO DO THAT : 
+//use split method first to store values like ["county a", "state a", "county b", "state b"..]
+//then create an object with property countyNameObject and stateNameObject and store odd number value to first and 
+//even number values to the latter property
+//let's try............... just up to this point....
+//well, it just made a subarray for each location. will be just using subarrays then, instead of objects.
+
+function splitCountyState(countyNames) {
+    for (i = 0; i<countyNames.length; i++) {
+	countyNames[i] = countyNames[i].split(",");
+	countyNamesOnly[i] = countyNames[i][0];
+}
+}
+
+var passToStorage = [];
+//below are functions for data need to be combined 
+//which is basically age distribution
+
+function calculateData(error, results) {
+ var age5 = eval(results[0].responseText);
+ age9 = eval(results[1].responseText);
+ var age14 = eval(results[2].responseText);
+ var age17 = eval(results[3].responseText);
+ age19 = eval(results[4].responseText);
+ var age20 = eval(results[5].responseText);
+ var age21 = eval(results[6].responseText);
+ var age24 = eval(results[7].responseText);
+ age29 = eval(results[8].responseText);
+ var age34 = eval(results[9].responseText);
+ age39 = eval(results[10].responseText);
+ var age44 = eval(results[11].responseText);
+ age49 = eval(results[12].responseText);
+ var age54 = eval(results[13].responseText);
+ age59 = eval(results[14].responseText);
+ var age61 = eval(results[15].responseText);
+ var age64 = eval(results[16].responseText);
+ var age66 = eval(results[17].responseText);
+ age69 = eval(results[18].responseText);
+ var age74 = eval(results[19].responseText);
+ age79 = eval(results[20].responseText);
+ var age84 = eval(results[21].responseText);
+ age85 = eval(results[22].responseText);
+
+ //[0]and [1] needs to be combined. for loop. add numbers.
+ //also has to store to different arrays
+//maybe have to delete last one; check afterwards (b/c of puerto rico)
+//this function does normalization and grouping arrays
+if (document.getElementById("femaleAgeRadio".checked=true)) {
+for (i=1; i<age5.length;i++){
+	age9[i][1] = Number(age9[i][1])/Number(totalPF[i - 1]) + Number(age5[i][1])/Number(totalPF[i - 1]);
+	age19[i][1] = Number(age19[i][1])/Number(totalPF[i - 1]) + Number(age17[i][1])/Number(totalPF[i - 1])+ Number(age14[i][1])/Number(totalPF[i - 1]);
+	age29[i][1] = Number(age29[i][1])/Number(totalPF[i - 1])+ Number(age24[i][1])/Number(totalPF[i - 1]) + Number(age21[i][1])/Number(totalPF[i - 1])+ Number(age20[i][1])/Number(totalPF[i - 1]);
+	age39[i][1] = Number(age39[i][1])/Number(totalPF[i - 1])+ Number(age34[i][1])/Number(totalPF[i - 1]);
+	age49[i][1] = Number(age49[i][1])/Number(totalPF[i - 1])+ Number(age44[i][1])/Number(totalPF[i - 1]);
+	age59[i][1] = Number(age59[i][1])/Number(totalPF[i - 1])+ Number(age54[i][1])/Number(totalPF[i - 1]);
+	age69[i][1] = Number(age69[i][1])/Number(totalPF[i - 1])+ Number(age66[i][1])/Number(totalPF[i - 1])+ Number(age64[i][1])/Number(totalPF[i - 1])+ Number(age61[i][1])/Number(totalPF[i - 1]);
+	age79[i][1] = Number(age79[i][1])/Number(totalPF[i - 1])+ Number(age74[i][1])/Number(totalPF[i - 1]);
+	age85[i][1] = Number(age85[i][1])/Number(totalPF[i - 1])+ Number(age84[i][1])/Number(totalPF[i - 1]);
+} 
+}
+else{
+for (i=1; i<age5.length;i++){
+	age9[i][1] = Number(age9[i][1])/Number(totalPM[i - 1]) + Number(age5[i][1])/Number(totalPM[i - 1]);
+	age19[i][1] = Number(age19[i][1])/Number(totalPM[i - 1]) + Number(age17[i][1])/Number(totalPM[i - 1])+ Number(age14[i][1])/Number(totalPM[i - 1]);
+	age29[i][1] = Number(age29[i][1])/Number(totalPM[i - 1])+ Number(age24[i][1])/Number(totalPM[i - 1]) + Number(age21[i][1])/Number(totalPM[i - 1])+ Number(age20[i][1])/Number(totalPM[i - 1]);
+	age39[i][1] = Number(age39[i][1])/Number(totalPM[i - 1])+ Number(age34[i][1])/Number(totalPM[i - 1]);
+	age49[i][1] = Number(age49[i][1])/Number(totalPM[i - 1])+ Number(age44[i][1])/Number(totalPM[i - 1]);
+	age59[i][1] = Number(age59[i][1])/Number(totalPM[i - 1])+ Number(age54[i][1])/Number(totalPM[i - 1]);
+	age69[i][1] = Number(age69[i][1])/Number(totalPM[i - 1])+ Number(age66[i][1])/Number(totalPM[i - 1])+ Number(age64[i][1])/Number(totalPM[i - 1])+ Number(age61[i][1])/Number(totalPM[i - 1]);
+	age79[i][1] = Number(age79[i][1])/Number(totalPM[i - 1])+ Number(age74[i][1])/Number(totalPM[i - 1]);
+	age85[i][1] = Number(age85[i][1])/Number(totalPM[i - 1])+ Number(age84[i][1])/Number(totalPM[i - 1]);
+} 
+}
+
+spliceDataThruQue(age9);
+spliceDataThruQue(age19);
+spliceDataThruQue(age29);
+spliceDataThruQue(age39);
+spliceDataThruQue(age49);
+spliceDataThruQue(age59);
+spliceDataThruQue(age69);
+spliceDataThruQue(age79);
+spliceDataThruQue(age85);
+
+//and maybe here make an array of q1 q2 q3... that will be passed into storage array in json
+for(i=0; i<age9.length;i++){
+	var array = [age9[i][1], age19[i][1], age29[i][1], age39[i][1], age49[i][1], age59[i][1], age69[i][1],age79[i][1], age85[i][1]];
+	var max = d3.max(array);
+	var index = array.indexOf(max) + 1;
+    totalDataByAgeGroup[i] = array;
+	passToStorage[i] = "q"+index;
+}
+
+    json();
+}
+
+function spliceDataThruQue (array) {
+    array.splice(0,1);
+	array.splice(array.length-1, 1);
+}
+function spliceDataThruQueC (array) {
+    array.splice(0,1);
+	array.splice(array.length-11, 11);
+}
+function calculateDataCounty(error, results) {
+ var age5c = eval(results[0].responseText);
+ age9c = eval(results[1].responseText);
+ var age14c = eval(results[2].responseText);
+ var age17c = eval(results[3].responseText);
+ age19c = eval(results[4].responseText);
+ var age20c = eval(results[5].responseText);
+ var age21c = eval(results[6].responseText);
+ var age24c = eval(results[7].responseText);
+ age29c = eval(results[8].responseText);
+ var age34c = eval(results[9].responseText);
+ age39c = eval(results[10].responseText);
+ var age44c = eval(results[11].responseText);
+ age49c = eval(results[12].responseText);
+ var age54c = eval(results[13].responseText);
+ age59c = eval(results[14].responseText);
+ var age61c = eval(results[15].responseText);
+ var age64c = eval(results[16].responseText);
+ var age66c = eval(results[17].responseText);
+ age69c = eval(results[18].responseText);
+ var age74c = eval(results[19].responseText);
+ age79c = eval(results[20].responseText);
+ var age84c = eval(results[21].responseText);
+ age85c = eval(results[22].responseText);
+
+ 
+ 
+ 
+if (document.getElementById("femaleAgeRadio".checked=true)) {
+for (i=1; i<age5c.length;i++){
+    countyID = age5c[i][2] + age5c[i][3];
+	age9c[i][1] = (Number(age9c[i][1])/Number(totalPCountyF[i - 1]) + Number(age5c[i][1])/Number(totalPCountyF[i - 1]));
+	age9c[i][4] = IdataCountyID[i - 1]
+	age19c[i][1] = (Number(age19c[i][1])/Number(totalPCountyF[i - 1]) + Number(age17c[i][1])/Number(totalPCountyF[i - 1])+ Number(age14c[i][1])/Number(totalPCountyF[i - 1]));
+	age19c[i][4] = IdataCountyID[i - 1]
+	age29c[i][1] = (Number(age29c[i][1])/Number(totalPCountyF[i - 1])+ Number(age24c[i][1])/Number(totalPCountyF[i - 1]) + Number(age21c[i][1])/Number(totalPCountyF[i - 1])+ Number(age20c[i][1])/Number(totalPCountyF[i - 1]));
+	age29c[i][4] = IdataCountyID[i - 1]
+	age39c[i][1] = (Number(age39c[i][1])/Number(totalPCountyF[i - 1])+ Number(age34c[i][1])/Number(totalPCountyF[i - 1]));
+	age39c[i][4] = IdataCountyID[i - 1]
+	age49c[i][1] = (Number(age49c[i][1])/Number(totalPCountyF[i - 1])+ Number(age44c[i][1])/Number(totalPCountyF[i - 1]))
+	age49c[i][4] = IdataCountyID[i - 1]
+	age59c[i][1] = (Number(age59c[i][1])/Number(totalPCountyF[i - 1])+ Number(age54c[i][1])/Number(totalPCountyF[i - 1]));
+	age59c[i][4] = IdataCountyID[i - 1]
+	age69c[i][1] = (Number(age69c[i][1])/Number(totalPCountyF[i - 1])+ Number(age66c[i][1])/Number(totalPCountyF[i - 1])+ Number(age64c[i][1])/Number(totalPCountyF[i - 1])+ Number(age61c[i][1])/Number(totalPCountyF[i - 1]));
+	age69c[i][4] = IdataCountyID[i - 1]
+	age79c[i][1] = (Number(age79c[i][1])/Number(totalPCountyF[i - 1])+ Number(age74c[i][1])/Number(totalPCountyF[i - 1]));
+	age79c[i][4] = IdataCountyID[i - 1]
+	age85c[i][1] = (Number(age85c[i][1])/Number(totalPCountyF[i - 1])+ Number(age84c[i][1])/Number(totalPCountyF[i - 1]));
+	age85c[i][4] = IdataCountyID[i - 1]
+} 
+}
+else{
+for (i=1; i<age5c.length;i++){
+    countyID = age5c[i][2] + age5c[i][3];
+	age9c[i][1] = (Number(age9c[i][1])/Number(totalPCountyM[i - 1]) + Number(age5c[i][1])/Number(totalPCountyM[i - 1]));
+	age9c[i][4] = IdataCountyID[i - 1]
+	age19c[i][1] = (Number(age19c[i][1])/Number(totalPCountyM[i - 1]) + Number(age17c[i][1])/Number(totalPCountyM[i - 1])+ Number(age14c[i][1])/Number(totalPCountyM[i - 1]));
+	age19c[i][4] = IdataCountyID[i - 1]
+	age29c[i][1] = (Number(age29c[i][1])/Number(totalPCountyM[i - 1])+ Number(age24c[i][1])/Number(totalPCountyM[i - 1]) + Number(age21c[i][1])/Number(totalPCountyM[i - 1])+ Number(age20c[i][1])/Number(totalPCountyM[i - 1]));
+	age29c[i][4] = IdataCountyID[i - 1]
+	age39c[i][1] = (Number(age39c[i][1])/Number(totalPCountyM[i - 1])+ Number(age34c[i][1])/Number(totalPCountyM[i - 1]));
+	age39c[i][4] = IdataCountyID[i - 1]
+	age49c[i][1] = (Number(age49c[i][1])/Number(totalPCountyM[i - 1])+ Number(age44c[i][1])/Number(totalPCountyM[i - 1]));
+	age49c[i][4] = IdataCountyID[i - 1]
+	age59c[i][1] = (Number(age59c[i][1])/Number(totalPCountyM[i - 1])+ Number(age54c[i][1])/Number(totalPCountyM[i - 1]));
+	age59c[i][4] = IdataCountyID[i - 1]
+	age69c[i][1] = (Number(age69c[i][1])/Number(totalPCountyM[i - 1])+ Number(age66c[i][1])/Number(totalPCountyM[i - 1])+ Number(age64c[i][1])/Number(totalPCountyM[i - 1])+ Number(age61c[i][1])/Number(totalPCountyM[i - 1]));
+	age69c[i][4] = IdataCountyID[i - 1]
+	age79c[i][1] = (Number(age79c[i][1])/Number(totalPCountyM[i - 1])+ Number(age74c[i][1])/Number(totalPCountyM[i - 1]));
+	age79c[i][4] = IdataCountyID[i - 1]
+	age85c[i][1] = (Number(age85c[i][1])/Number(totalPCountyM[i - 1])+ Number(age84c[i][1])/Number(totalPCountyM[i - 1]));
+	age85c[i][4] = IdataCountyID[i - 1]
+} 
+}
+
+ 
+
+ //[0]and [1] needs to be combined. for loop. add numbers.
+ //also has to store to different arrays
+//maybe have to delete last one; check afterwards (b/c of puerto rico)
+//this function does normalization and grouping arrays
+
+
+spliceDataThruQueC(age9c);
+spliceDataThruQueC(age19c);
+spliceDataThruQueC(age29c);
+spliceDataThruQueC(age39c);
+spliceDataThruQueC(age49c);
+spliceDataThruQueC(age59c);
+spliceDataThruQueC(age69c);
+spliceDataThruQueC(age79c);
+spliceDataThruQueC(age85c);
+
+//rearrange these counties 
+/*for (i=0; i<rearrangedCountyID.length;i++){
+if (indexOf(rearrangedCountyID[i])
+newAge9c[i] = rearrangedCountyID[i]
+
+
+
+*
+}*/
+
+
+
+//and maybe here make an array of q1 q2 q3... that will be passed into storage array in json
+/*console.log(IdataCountyID.indexOf(rearrangedCountyID[2].toString()))
+console.log(rearrangedCountyID[2].toString())
+console.log(IdataCountyID[2])
+console.log(IdataCountyID.indexOf(rearrangedCountyID[0].toString()))
+console.log(rearrangedCountyID[0].toString())
+console.log(IdataCountyID[0])
+console.log(IdataCountyID.indexOf(rearrangedCountyID[1].toString()))
+console.log(rearrangedCountyID[1].toString())
+console.log(IdataCountyID[1])*/
+
+
+for(i=0; i<rearrangedCountyID.length;i++){
+var indexValueIs = IdataCountyID.indexOf(rearrangedCountyID[i].toString())
+
+if (indexValueIs == -1) {passToStorage[i] = ("NA")}
+else { 
+	var array = [age9c[indexValueIs][1], age19c[indexValueIs][1], age29c[indexValueIs][1], age39c[indexValueIs][1], age49c[indexValueIs][1], age59c[indexValueIs][1], age69c[indexValueIs][1],age79c[indexValueIs][1], age85c[indexValueIs][1]];
+	var max = d3.max(array);
+
+	var index = array.indexOf(max) + 1;
+	totalDataByAgeGroupCounty[i] = array;
+	passToStorage[i] = "q"+index;
+	
+	//passToStorage[i][1].push(age9c[i][4]);
+	}
+
+}
+
+	json();}
+/*for(i=0; i<age9c.length;i++){
+var array = [age9c[indexValueIs][1], age19c[indexValueIs][1], age29c[indexValueIs][1], age39c[indexValueIs][1], age49c[indexValueIs][1], age59c[indexValueIs][1], age69c[indexValueIs][1],age79c[indexValueIs][1], age85c[indexValueIs][1]];
+	var max = d3.max(array);
+	var index = array.indexOf(max) + 1;
+	totalDataByAgeGroupCounty[i] = array;
+	passToStorage.push("q"+index)
+}*/
+
+function IdataCountyRearrage(){
+d3.json("https://239cda.github.io/Pro2/us.json", function(error, us) {
+for (i=0; i<3220; i++){
+    totalCountyID.push(us.objects.counties.geometries[i].id);
+   }
+   var IDOnly = [];
+	for (i=0; i<IdataCountyID.length;i++){
+		IDOnly[i] = Number(IdataCountyID[i])
+		}
+    //console.log("IdataCountyID")
+	//console.log(IdataCountyID)
+	for (i=0;i<totalCountyID.length;i++){
+//id value
+     var v = totalCountyID[i]
+	 if (IDOnly.indexOf(v) == -1) {rearrangedCountyID[i] = "NA"}
+	 else {rearrangedCountyID[i] = v;} 	 		   
+	}
+     })
+}
+
+//runs when radiobutton for states is checked
+function choroStateOn(){
+	d3.selectAll('path').remove();
+	if(document.getElementById("femaleAgeRadio").checked = true) {femaleAgeDistribution();}
+	else{maleAgeDistribution();}
+    stateOrCounty = 1;
+	//json();
+}
+//runs when radiobutton for county is checked
+function choroCountyOn(){
+	d3.selectAll('path').remove();
+	if(document.getElementById("femaleAgeRadio").checked = true) {femaleAgeDistributionCounty();}
+	else{maleAgeDistributionCounty();}
+    stateOrCounty = 2;
+	//json();
+}
+function chorofemale(){
+	d3.selectAll('path').remove();
+    if(document.getElementById("choroState").checked = true) {femaleAgeDistribution();}
+	else{femaleAgeDistributionCounty();}
+	stateOrCounty = 1;
+	//json();
+}
+//runs when radiobutton for county is checked
+function choromale(){
+	d3.selectAll('path').remove();
+	if(document.getElementById("choroState").checked = true) {maleAgeDistribution();}
+	else{maleAgeDistributionCounty();}
+    stateOrCounty = 2;
+	//json();
+}
+
+function json() {d3.json("https://239cda.github.io/Pro2/us.json", function(error, us) {
+d3.selectAll('path').remove();
+  svg.insert("path", ".graticule")
+      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .attr("class", "state-boundary")
+      .attr("d", path);
+	  
+//this one for counties		  
+//If have time: make other counties (below 65K) selectable too, only show county name.
+if (stateOrCounty == 2) {
+//enable selection box for county here
+document.getElementById("countySelectBox").disabled = false;
+
+  var stringVer = null;
+  var stateCode = null;
+  var countyCode = null;
+  var locationStateID = null;
+  var ClocationStateID = null;
+  var ClocationCountyID = null;
+  var splitted = null; 
+  var clickedState = null;
+  
+  var countyValue = [];
+  var storage = [];
+  var newStorage = [];
+  for (i=0; i<passToStorage.length; i++) {
+	   storage[i] = passToStorage[i];
+  }
+//compareColorValue(storage, rearrangedCountyID);
+//console.log(newStorage)
+//console.log(storage)
+    svg.insert("path", ".graticule")
+      .datum(topojson.mesh(us, us.objects.counties, function(a, b) { return a !== b && !(a.id / 1000 ^ b.id / 1000); }))
+      .attr("class", "county-boundary")
+      .attr("d", path); 
+	  
+//this variable contains all the id present in json  
+    svg.append("g")
+      .attr("class", "counties")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.counties).features)
+    .enter().append("path")
+	  .attr("class", function(d, i) {return storage[i];}) //this is where color goes in
+	  .attr("id", "selectedCounty")
+      .attr("d", path).on("click", function(d) 
+          {
+		  
+            if (!d.selected) {
+                d3.select(this).style("fill", "#ffda21");
+                clickedState = d.id;
+				d.selected = true;
+				stringVer = clickedState.toString();
+				//first, convert d.id to string
+				stringVer = clickedState.toString();		
+				//then divide it into two parts (state code and county code)
+				   if (stringVer.length<5) {
+				          stateCode = "0"+stringVer.slice(0,1); 
+						  countyCode = stringVer.slice(1);
+					}
+				   else {stateCode = stringVer.slice(0,2); 
+					  countyCode = stringVer.slice(2);
+				     }
+				//and store them separately
+				//then run the below function for IdataCounty (which has all the data related to county)
+			//var totalCountiesCompare = [];
+			    for (i=0; i<age9c.length; i++){
+				     if (stateCode == age9c[i][2]) {
+					 //totalCountiesCompare.push(IdataCounty[i])
+					    if (countyCode == age9c[i][3]) {
+						  ClocationStateID = age9c[i][0];
+					      ClocationCountyID = age9c[i][0];
+					   }
+					 } 
+				}
+				
+				splitted = ClocationStateID.split(",")
+
+
+				document.getElementById("stateSelectBox").value = splitted[1].trim();
+				d3.select('#countySelectBox').selectAll('option')
+							  .data(countyNamesOnly)
+							  .enter().append('option')
+	                          .html(function(d) { return d; })
+	                          .attr('value', function(d) { return d; })	
+				document.getElementById("countySelectBox").value = splitted[0].trim();
+
+				var currentValue = rearrangedIdataCounty[(rearrangedCountyID.indexOf(d.id))];
+				
+ 				
+				drawBarCompareWithin(clickedState);
+			// state selected
+			}
+			else {
+			d3.select(this).style("fill", null);
+			clickedState = null;
+			d.selected = false;
+
+			// state un-selected
+			}
+			})
+
+				.on('mousemove', function(d) {
+                    var mouse = d3.mouse(svg.node()).map(function(d) {
+                        return parseInt(d);
+                    });
+					
+					var index = null;
+						      for (i=0;i<age9c.length;i++) {
+							       if (age9c[i][4] == d.id) {
+								     index = i;
+								   }
+							  }
+					var indexForStorage = null;
+                              for (i=0;i<totalCountyID.length;i++) {
+							       if (totalCountyID[i] == d.id) {
+								     indexForStorage = i;
+								   }
+							  }
+
+					d3.select("#tooltip")
+						.style("left", mouse[0] + 15 + "px")
+						.style("top", mouse[1] - 35 + "px")					
+						.select("#locationName")
+						.text(age9c[index][0])
+						//first, to get the county name, use any age group indexOf
+						//find out which age group: find out qn 
+						//the order of storage == order of totalCountyID
+						//totalCountyID.indexOf(d.id))
+						//have ID number ---> can search that value inside right age group
+						//to find age group ---> totalCountyID.indexOf(d.id)
+						//use the index to locate value in storage;
+					
+				
+					if (storage[indexForStorage] == "q1"){
+					   calculateToolTip (age9c, d.id, 9);
+					}
+					else if (storage[indexForStorage] == "q2"){
+					calculateToolTip (age19c, d.id, 19);
+					}
+					else if (storage[indexForStorage] == "q3"){
+					calculateToolTip (age29c, d.id, 29);
+					}
+					else if (storage[indexForStorage] == "q4"){
+					calculateToolTip (age39c, d.id, 39);
+					}
+					else if (storage[indexForStorage] == "q5"){
+					calculateToolTip (age49c, d.id, 49);
+					}
+					else if (storage[indexForStorage] == "q6"){
+					calculateToolTip (age59c, d.id, 59);
+					}
+					else if (storage[indexForStorage] == "q7"){
+					calculateToolTip (age69c, d.id, 69);
+					}
+					else if (storage[indexForStorage] == "q8"){
+					calculateToolTip (age79c, d.id, 79);
+					}
+					else if (storage[indexForStorage] == "q9"){
+					calculateToolTip (age85c, d.id, 89);
+					}	
+					//console.log(storage[indexForStorage])
+					//Show the tooltip
+					d3.select("#tooltip").classed("hidden", false);
+			   })
+			   .on("mouseout", function() {
+			   
+					//Hide the tooltip
+					d3.select("#tooltip").classed("hidden", true);	
+			   });
+	  
+  
+  svg.append("g")
+      .attr("class", "statesC")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.states).features)
+    .enter().append("path")
+	  .attr("stroke-width", 1)
+	  .attr("stroke","#666666" )
+      .attr("d", path);  
+}	
+////////////////////STATES!!!!!!!!!!!!!!!!!///////////////
+//this one for states	    
+else if(stateOrCounty == 1){
+
+document.getElementById("countySelectBox").disabled = true;
+var clickedState = null;
+
+var locationStateID = null;
+var storage = [];
+
+  for (i=0; i<passToStorage.length; i++) {
+	   storage[i] = passToStorage[i];
+  }
+
+   svg.append("g")
+      .attr("class", "states")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.states).features)
+    .enter().append("path")
+	  .attr("class", function(d, i) {return storage[i];})
+	  .attr("stroke-width", 1)
+	  .attr("stroke","#666666" )
+	  .attr("id", "selectedState")
+      .attr("d", path).on("click", function(d) 
+          {
+		  
+            if (!d.selected) {
+                d3.select(this).style("fill", "#ffda21");
+                clickedState = d.id;
+				d.selected = true;
+				//look up the d.id from stateIdNumber array
+				for (i=0; i<stateIdNumber.length; i++){
+				     if (d.id == stateIdNumber[i]) {locationStateID = i;} 
+				}
+				document.getElementById("stateSelectBox").value = stateNames[1 + locationStateID];
+				
+				drawBarCompareWithin(clickedState);
+
+			// state selected
+			}
+			else {
+			d3.select(this).style("fill", null)
+			clickedState = null;
+			d.selected = false;
+
+			// state un-selected
+			}
+			})
+		.on('mousemove', function(d) {
+                    var mouse = d3.mouse(svg.node()).map(function(d) {
+                        return parseInt(d);
+                    });
+					var indexForStorage = null;
+                              for (i=0;i<stateIdNumber.length;i++) {
+							       if (Number(stateIdNumber[i]) == d.id) {
+								     indexForStorage = i;
+								   }
+					}
+						  
+					d3.select("#tooltip")
+						.style("left", mouse[0] + 15 + "px")
+						.style("top", mouse[1] - 35 + "px")					
+						.select("#locationName")
+						.text(stateNames[1 + stateIdNumber.indexOf(d.id)]);
+					
+				    if (storage[indexForStorage] == "q1"){
+					   calculateToolTip (age9, d.id, 9);
+					}
+					else if (storage[indexForStorage] == "q2"){
+					calculateToolTip (age19, d.id, 19);
+					}
+					else if (storage[indexForStorage] == "q3"){
+					calculateToolTip (age29, d.id, 29);
+					}
+					else if (storage[indexForStorage] == "q4"){
+					calculateToolTip (age39, d.id, 39);
+					}
+					else if (storage[indexForStorage] == "q5"){
+					calculateToolTip (age49, d.id, 49);
+					}
+					else if (storage[indexForStorage] == "q6"){
+					calculateToolTip (age59, d.id, 59);
+					}
+					else if (storage[indexForStorage] == "q7"){
+					calculateToolTip (age69, d.id, 69);
+					}
+					else if (storage[indexForStorage] == "q8"){
+					calculateToolTip (age79, d.id, 79);
+					}
+					else if (storage[indexForStorage] == "q9"){
+					calculateToolTip (age85, d.id, 89);
+					}	
+					
+
+					//Show the tooltip
+					d3.select("#tooltip").classed("hidden", false);
+			   })
+			   .on("mouseout", function() {
+			   
+					//Hide the tooltip
+					d3.select("#tooltip").classed("hidden", true);	
+			   });	 		
+}
+
+})};
+
+//function for adding county selection box contents according to the state selection box input
+d3.select("#stateSelectBox")
+				   .on('change', function(){
+				   d3.select('#countySelectBox').selectAll('option').remove();
+				   
+				   var selection = document.getElementById('stateSelectBox');
+				   var selectedStateValue = selection.options[selection.selectedIndex].value;
+                   var selectedStateIndex = document.getElementById('stateSelectBox').selectedIndex;
+                   var currentStateID = null;
+				   var storeCountyName = [];	
+				   
+				   if(stateOrCounty == 1){
+				   //get the selected state value and use that value to find out its id in iData
+				   //or I can use index, too
+				   
+				   currentStateID = Idata[selectedStateIndex-1][2];
+				   //if id is found, compare with d.id, and select the one that has a matching id?
+				   d3.json("https://239cda.github.io/Pro2/us.json", function(error, us) {
+								console.log((us.objects.states.geometries))
+							   })
+				   //can make a loop using function(d,i)
+				   //
+				   }
+				   if(stateOrCounty == 2) {
+						for (i = 0; i<countyNames.length; i++) {
+						countyNames[i][1] = countyNames[i][1].trim();
+						}
+						for (i= 0; i<countyNames.length; i++){
+							  if (selectedStateValue == countyNames[i][1]) 
+							  {storeCountyName.push(countyNames[i][0])}
+						}
+						//compare between selectedStatevalue and [i][1]of countyNames
+						    d3.select('#countySelectBox').selectAll('option')
+							  .data(storeCountyName)
+							  .enter().append('option')
+	                          .html(function(d) { return d; })
+	                          .attr('value', function(d) { return d; })	
+						}})
+						
+function calculateToolTip (ageArray, id, ageGroup) {
+if (stateOrCounty == 1) {
+  if (ageGroup == 89) {
+     var ageGroupProcessed = (Number(ageGroup) - 9) + " and above";
+  }
+  else {
+     var ageGroupProcessed = (Number(ageGroup) - 9) + "-" + ageGroup;}
+
+	for (i=0;i<ageArray.length;i++){
+		if (Number(ageArray[i][2]) == id) {
+			var valueDisplay = ageArray[i][1] * 100;
+			valueDisplay = d3.round(valueDisplay, 1);
+			
+			document.getElementById("value").innerHTML ="Age of " + ageGroupProcessed + " is "+ valueDisplay + "% of total population"
+		}
+	}
+}
+else{
+if (ageGroup == 89) {
+     var ageGroupProcessed = (Number(ageGroup) - 9) + " and above";
+  }
+  else {
+var ageGroupProcessed = (Number(ageGroup) - 9) + "-" + ageGroup;
+}
+for (i=0;i<ageArray.length;i++){
+	if (Number(ageArray[i][4]) == id) {
+			var valueDisplay = ageArray[i][1] * 100;
+			valueDisplay = d3.round(valueDisplay, 1);
+			
+			document.getElementById("value").innerHTML ="Age of " + ageGroupProcessed + " is "+ valueDisplay + "% of total population"
+		}					
+}						
+}
+}					
+
+function drawBarCompareWithin(clickedState) {
+
+var maximumBarCompareWithin = null;
+var data = [];
+//여기 스테이트랑 에이지 타입 맞는지, 에이지9가 밸류 포함하고 있는지 나중에 확인
+if (stateOrCounty == 1) {
+var maxes = [];
+   if (maxes.length<1) {
+	for (i=0;i<totalDataByAgeGroup.length;i++){
+	maxes[i] = d3.max(totalDataByAgeGroup[i])}
+   }
+   for (i=0;i<totalDataByAgeGroup.length;i++){
+	if (Number(age9[i][2]) == clickedState) {
+	data.push(totalDataByAgeGroup[i]);}
+   }
+   for (i=0;i<data[0].length;i++){
+   data.push(data[0][i]);
+   }
+   data.splice(0,1);
+maximumBarCompareWithin = d3.max(maxes); 
+}
+else {
+var maxesCounty = [];
+var maxes = [];
+var indexValueForBar = totalCountyID.indexOf(clickedState);
+
+if (maxes.length<1) {
+	for (i=0;i<totalDataByAgeGroupCounty.length;i++){
+	if (totalDataByAgeGroupCounty[i]!= undefined ) {
+	maxes[i] = d3.max(totalDataByAgeGroupCounty[i])}
+   }
+   }
+   /*for (i=0;i<totalDataByAgeGroupCounty.length;i++){
+	if (Number(age9c[i][4]) == clickedState) {
+	data.push(totalDataByAgeGroupCounty[i]);}
+   }*/
+   for (i=0; i<totalDataByAgeGroupCounty[indexValueForBar].length;i++){
+   data.push(totalDataByAgeGroupCounty[indexValueForBar][i])
+   }
+   for (i=0;i<data[0].length;i++){
+   data.push(data[0][i]);
+   }
+   //data.splice(0,1);
+maximumBarCompareWithin = d3.max(maxes); 
+
+}
+
+//trim data
+
+for (i=0;i<data.length;i++){
+    data[i] = (data[i].toPrecision(3)) * 100; 
+	data[i] = data[i].toString();
+	data[i] = data[i].slice(0, 4);
+}
+maximumBarCompareWithin = maximumBarCompareWithin * 100;
+
+	// figure out maximum energy production
+
+	var svgGraph = d3.select("svg").append("g")
+                    .attr("transform", "translate(1100, 350)");
+	var padding = 20;
+
+	// chart size 
+	var chartWidth = 400;
+	var chartHeight = 300;
+	// figure out the width of individual bars
+	var barWidth = 30;
+	
+	var xScale = d3.scale.ordinal()
+							.domain(d3.range(data.length))
+							.rangeRoundBands([0, chartWidth, 0.9]);
+
+	var yScale = d3.scale.linear()
+							.domain([0, maximumBarCompareWithin])
+							.range([0, chartHeight]);
+							
+		d3.select('svg').selectAll('rect').remove();					
+							
+			//Create bars
+		svgGraph.selectAll("rect")
+			   .data(data)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return xScale(i);
+			   })
+			   .attr("y", function(d) {
+			   		return chartHeight - yScale(d);
+			   })
+			   .attr("width", xScale.rangeBand())
+			   .attr("height", function(d) {
+			   		return yScale(d);
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+
+			//Create labels
+		svgGraph.selectAll("text")
+			   .data(data)
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d;
+			   })
+			   .attr("text-anchor", "middle")
+			   .attr("x", function(d, i) {
+			   		return xScale(i) + xScale.rangeBand() / 4;
+			   })
+			   .attr("y", function(d) {
+			   		return chartHeight - yScale(d) + 15;
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "11px")
+			   .attr("fill", "white");
+			   
+			   
+	//title for each bar
+	/*var medianTitle = null;
+	var variableTitle = null;
+	if (stateOrCounty == 1) {
+
+	}
+	else if (stateOrCounty == 2) {
+	}
+	d3.select("#bar1")
+	   .html(medianTitle)		   
+	d3.select("#bar2")
+	   .html(variableTitle)		*/
+
+
+
+	   
+}
+///function for sending selected location info in the form of index
+function goToCompare(){
+   if (stateOrCounty == 1){
+		var stateIndex = document.getElementById("stateSelectBox").selectedIndex;
+		window.location = "compare.html?" + stateIndex;
+	}
+   if (stateOrCounty == 2){
+		var stateIndex = document.getElementById("stateSelectBox").selectedIndex;
+		var countyIndex = document.getElementById("countySelectBox").selectedIndex;
+		
+		window.location = "compare.html?" + stateIndex +countyIndex;
+   }
+}
+prepareVariables();		
+femaleAgeDistribution();						
+d3.select(self.frameElement).style("height", height + "px");
+
+
+</script>
