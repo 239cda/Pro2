@@ -196,7 +196,8 @@ var width = 1500,
 
 var projection = d3.geo.albersUsa()
     .scale(1200)
-    .translate([width / 4 + 100, height / 2 - 50]);
+    .translate([width / 4 + 300, height / 2 - 10]);
+
 
 var path = d3.geo.path()
     .projection(projection);
@@ -929,8 +930,9 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 
 	// figure out maximum energy production
 
-	var svgGraph = d3.select("svg").append("g")
-                    .attr("transform", "translate(1100, 350)");
+		var svgGraph = d3.select("svg").append("g")
+                    .attr("transform", "translate(1250, 350)");
+
 	var padding = 20;
 
 	// chart size 
