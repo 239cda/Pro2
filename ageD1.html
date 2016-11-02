@@ -112,15 +112,27 @@ div.tooltip {
 
 
 
-.q1 { fill:rgb(197, 171, 226);}
-.q2 { fill:rgb(183, 155, 217);}
-.q3 { fill:rgb(170, 139, 207);}
-.q4 { fill:rgb(157, 123, 198);}
-.q5 { fill:rgb(143, 107, 188);}
-.q6 { fill:rgb(130, 91, 178);}
-.q7 { fill:rgb(116, 75, 169);}
-.q8 { fill:rgb(103, 59, 159);}
-.q9 { fill:rgb(90, 44, 150);}
+.q1 { fill:rgb(200, 227, 244);}
+.q2 { fill:rgb(176, 215, 231);}
+.q3 { fill:rgb(152, 204, 218);}
+.q4 { fill:rgb(128, 193, 205);}
+.q5 { fill:rgb(104, 182, 193);}
+.q6 { fill:rgb(80, 171, 180);}
+.q7 { fill:rgb(56, 160, 167);}
+.q8 { fill:rgb(32, 149, 154);}
+.q9 { fill:rgb(8, 138, 142);}
+	
+
+.q11 { fill:rgb(254, 237, 235);}
+.q12 { fill:rgb(253, 223, 219);}
+.q13 { fill:rgb(250, 209, 204);}
+.q14 { fill:rgb(252, 196, 189);}
+.q15 { fill:rgb(252, 182, 174);}
+.q16 { fill:rgb(251, 168, 159);}
+.q17 { fill:rgb(251, 155, 144);}
+.q18 { fill:rgb(250, 141, 129);}
+.q19 { fill:rgb(250, 128, 114);}	
+	
 
 </style>
 <body>
@@ -330,6 +342,7 @@ age69c = [];
 age79c = [];
 age85c = [];
 
+	var manOrWoman = null;
 
 function IpassPopData (error, results) {
 var arrayForData = eval(results[0].responseText);
@@ -375,6 +388,7 @@ function prepareVariables() {
 //function for state data
 function maleAgeDistribution (){
 needNormalize = true;
+	manOrWoman = 1;
      d3.queue()
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
@@ -409,6 +423,7 @@ needNormalize = true;
 		  .awaitAll(calculateData);
 }		  
 function maleAgeDistributionCounty (){
+	manOrWoman = 1;
 	d3.queue()
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
@@ -445,6 +460,7 @@ function maleAgeDistributionCounty (){
 
 function femaleAgeDistribution (){
 needNormalize = true;
+	manOrWoman = 2;
      d3.queue()
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
@@ -479,6 +495,7 @@ needNormalize = true;
 		  .awaitAll(calculateData);
 }		  
 function femaleAgeDistributionCounty(){
+	manOrWoman = 2;
 	d3.queue()
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
@@ -647,7 +664,11 @@ for(i=0; i<age9.length;i++){
 	var max = d3.max(array);
 	var index = array.indexOf(max) + 1;
     totalDataByAgeGroup[i] = array;
-	passToStorage[i] = "q"+index;
+	if (manOrWoman == 1) { 
+	passToStorage[i] = "q"+index;}
+	else (manOrWoman == 2) {
+	passToStorage[i] = "q1"+index;}
+	}
 }
 
     json();
@@ -788,7 +809,11 @@ else {
 
 	var index = array.indexOf(max) + 1;
 	totalDataByAgeGroupCounty[i] = array;
-	passToStorage[i] = "q"+index;
+	if (manOrWoman == 1) { 
+	passToStorage[i] = "q"+index;}
+	else (manOrWoman == 2) {
+	passToStorage[i] = "q1"+index;}
+	}
 	
 	//passToStorage[i][1].push(age9c[i][4]);
 	}
