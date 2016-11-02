@@ -1336,7 +1336,8 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return yScale(d);
 			   })
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+					if (manOrWoman == 1) {return "#088A8E"}
+					if (manOrWoman == 2) {return "#9B72D0"};
 			   });
 
 			//Create labels
