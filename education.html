@@ -2,17 +2,26 @@
 <meta charset="utf-8">
 <style>
 .menu {
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 30px;
 font-family: SF UI Text (Medium); 
 }
+.menu:hover{
+  color: #7890DB;
+}
 .submenu1{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
 }
 .submenu2{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
+}
+.submenu1:hover{
+  color: #7890DB;
+}
+.submenu2:hover{
+  color: #7890DB;
 }
 .counties {
   fill: none;
@@ -110,14 +119,11 @@ div.tooltip {
 			}
 
 
-
-
-.q1 { fill:rgb(251, 55, 135);}
-.q2 { fill:rgb(253, 112, 170);}
-.q3 { fill:rgb(195, 126, 176);}
-.q4 { fill:rgb(153, 91, 169);}
-.q5 { fill:rgb(111, 54, 149);}
-.q6 { fill:rgb(70, 25, 85);}
+.q1 { fill:rgb(253, 112, 170);}
+.q2 { fill:rgb(195, 126, 176);}
+.q3 { fill:rgb(153, 91, 169);}
+.q4 { fill:rgb(111, 54, 149);}
+.q5 { fill:rgb(70, 25, 85);}
 
 </style>
 <body>
@@ -142,15 +148,17 @@ div.tooltip {
 <img src="https://239cda.github.io/Pro2/educational attainment by place of birth legend.png" style="position: absolute; left: 1250px; top: 700px">
 
 <!--labels for bar chart-->
-<text id='bar1' class = 'label' style= "position: absolute; left: 1260px; top: 660px"></text>
-<text id='bar2' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
-
+<text id='bar1' class = 'label' style= "position: absolute; left: 1280px; top: 660px"></text>
+<text id='bar2' class = 'label' style= "position: absolute; left: 1340px; top: 660px"></text>
+<text id='bar3' class = 'label' style= "position: absolute; left: 1440px; top: 660px"></text>
+<text id='bar4' class = 'label' style= "position: absolute; left: 1510px; top: 660px"></text>
+<text id='bar5' class = 'label' style= "position: absolute; left: 1590px; top: 660px"></text>
 <!--labels for radio buttons-->
 <text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
 <text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
 
 <!--menu buttons on top-->
-<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
+<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px; color:#7890DB">Demographics</text>
 <text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
 <text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
 <text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
@@ -221,33 +229,45 @@ function trans(){
 window.location = "https://239cda.github.io/Pro2/transportation.html"
 }
 function submenu1() {
+document.getElementById("demo").style.color = "#7890DB"
+document.getElementById("income").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("totalD").style.display = "block";
 document.getElementById("AgeD").style.display = "block";
 document.getElementById("MedianD").style.display = "block";
 document.getElementById("RaceD").style.display = "block";
 document.getElementById("educationD").style.display = "block";
+
 document.getElementById("medianH").style.display = "none";
 document.getElementById("perC").style.display = "none";
 document.getElementById("incomeR").style.display = "none";
 document.getElementById("povertyLevel").style.display = "none";
 }
 function submenu2() {
+document.getElementById("income").style.color = "#7890DB";
+document.getElementById("demo").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("medianH").style.display = "block";
 document.getElementById("perC").style.display = "block";
 document.getElementById("incomeR").style.display = "block";
 document.getElementById("povertyLevel").style.display = "block";
+
 document.getElementById("totalD").style.display = "none";
 document.getElementById("AgeD").style.display = "none";
 document.getElementById("MedianD").style.display = "none";
 document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
-var width = 1500,
+var width = 2000,
     height = 1000;
 
 var projection = d3.geo.albersUsa()
     .scale(1200)
-    .translate([width / 4 + 300, height / 2 - 10]);
+    .translate([(width - 500) / 4 + 300, height / 2 - 10]);
 
 
 var path = d3.geo.path()
@@ -953,15 +973,19 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 	
 	var xScale = d3.scale.ordinal()
 							.domain(d3.range(data.length))
-							.rangeRoundBands([0, chartWidth, 0.9]);
+							.rangeRoundBands([20, chartWidth, 0.9]);
 
 	var yScale = d3.scale.linear()
 							.domain([0, maximumBarCompareWithin])
-							.range([0, chartHeight]);
+							.range([chartHeight, 0]);
 							
 		d3.select('svg').selectAll('rect').remove();					
-							
+		svg.selectAll('.axis').remove();					
 			//Create bars
+			
+var colorStorage = ["#FD70AA","#C37EB0","#995BA9","#6F3695","#461955"];				
+			
+			
 		svgGraph.selectAll("rect")
 			   .data(data)
 			   .enter()
@@ -970,15 +994,13 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i);
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d);
+			   		return yScale(d);
 			   })
 			   .attr("width", xScale.rangeBand())
 			   .attr("height", function(d) {
-			   		return yScale(d);
+			   		return chartHeight - yScale(d);
 			   })
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
-			   });
+			   .attr("fill", function(d, i) {return colorStorage[i]});
 
 			//Create labels
 		svgGraph.selectAll("text")
@@ -993,26 +1015,32 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i) + xScale.rangeBand() / 4;
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d) + 15;
+			   		return yScale(d) + 15;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
 			   .attr("fill", "white");
 			   
+var yAxis = d3.svg.axis()
+				.scale(yScale)
+				.orient('left');
+				
+		svgGraph.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);			   
 			   
 	//title for each bar
-	/*var medianTitle = null;
-	var variableTitle = null;
-	if (stateOrCounty == 1) {
-
-	}
-	else if (stateOrCounty == 2) {
-	}
 	d3.select("#bar1")
-	   .html(medianTitle)		   
+	   .html("Below")		   
 	d3.select("#bar2")
-	   .html(variableTitle)		*/
-
+	   .html("High school graduate")	
+	d3.select("#bar3")
+	   .html("Some college")		   
+	d3.select("#bar4")
+	   .html("Bachelor's degree")	
+	d3.select("#bar5")
+	   .html("Graduate degree")	
 
 
 	   
