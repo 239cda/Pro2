@@ -2,17 +2,26 @@
 <meta charset="utf-8">
 <style>
 .menu {
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 30px;
 font-family: SF UI Text (Medium); 
 }
+.menu:hover{
+  color: #7890DB;
+}
 .submenu1{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
 }
 .submenu2{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
+}
+.submenu1:hover{
+  color: #7890DB;
+}
+.submenu2:hover{
+  color: #7890DB;
 }
 .counties {
   fill: none;
@@ -109,9 +118,6 @@ div.tooltip {
 				line-height: 20px;
 			}
 
-
-
-
 .q1 { fill:rgb(197, 171, 226);}
 .q2 { fill:rgb(183, 155, 217);}
 .q3 { fill:rgb(170, 139, 207);}
@@ -121,6 +127,17 @@ div.tooltip {
 .q7 { fill:rgb(116, 75, 169);}
 .q8 { fill:rgb(103, 59, 159);}
 .q9 { fill:rgb(90, 44, 150);}
+
+.q11 { fill:rgb(223, 241, 239);}
+.q12 { fill:rgb(207, 234, 231);}
+.q13 { fill:rgb(192, 228, 223);}
+.q14 { fill:rgb(176, 221, 215);}
+.q15 { fill:rgb(161, 215, 207);}
+.q16 { fill:rgb(146, 209, 199);}
+.q17 { fill:rgb(130, 202, 191);}
+.q18 { fill:rgb(115, 196, 183);}
+.q19 { fill:rgb(100, 190, 176);}	
+
 
 </style>
 <body>
@@ -151,9 +168,10 @@ div.tooltip {
 <!--labels for radio buttons-->
 <text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
 <text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
-
+<text id='radioText1' class = 'label' style= "position: absolute; left: 1215px; top: 140px">Female</text>
+<text id='radioText2' class = 'label' style= "position: absolute; left: 1315px; top: 140px">Male</text>
 <!--menu buttons on top-->
-<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
+<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px; color:#7890DB">Demographics</text>
 <text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
 <text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
 <text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
@@ -175,7 +193,8 @@ div.tooltip {
 <option selected="selected" hidden >---select a county---</option></select>
 <input type="radio" id ="choroState" name ="radioChoro" onclick = "choroStateOn();" value="bar" checked style="position: absolute; left: 1230px; top: 200px"> 
 <input type="radio" id ="choroCounty" name ="radioChoro" onclick = "choroCountyOn();" value="bar" style="position: absolute; left: 1330px; top: 200px">
-<!--implement this if have time
+<input type="radio" id ="femaleAgeRadio" name ="radioData" onclick = "chorofemale();" value="bar" checked style="position: absolute; left: 1230px; top: 160px"> 
+<input type="radio" id ="maleAgeRadio" name ="radioData" onclick = "choromale();" value="bar" style="position: absolute; left: 1330px; top: 160px"><!--implement this if have time
 <input type="radio" id ="totalAgeRadio" name ="radioData" onclick = "totalAgeDistribution();" value="bar" style="position: absolute; left: 1200px; top: 200px">
 -->
 <select id="stateSelectBox" name = "selectBox" style="position: absolute; left: 1230px; top: 260px">
@@ -190,8 +209,8 @@ div.tooltip {
 <script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js"></script>
 
 <script>
-	
-	function population(){
+var manOrWoman = null;	
+function population(){
 window.location = "https://239cda.github.io/Pro2/totalPopulation.html"}
 function femaleAgeDistribution(){
 window.location = "https://239cda.github.io/Pro2/ageD1.html"
@@ -224,27 +243,40 @@ function trans(){
 window.location = "https://239cda.github.io/Pro2/transportation.html"
 }
 function submenu1() {
+document.getElementById("demo").style.color = "#7890DB"
+document.getElementById("income").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("totalD").style.display = "block";
 document.getElementById("AgeD").style.display = "block";
 document.getElementById("MedianD").style.display = "block";
 document.getElementById("RaceD").style.display = "block";
 document.getElementById("educationD").style.display = "block";
+
 document.getElementById("medianH").style.display = "none";
 document.getElementById("perC").style.display = "none";
 document.getElementById("incomeR").style.display = "none";
 document.getElementById("povertyLevel").style.display = "none";
 }
 function submenu2() {
+document.getElementById("income").style.color = "#7890DB";
+document.getElementById("demo").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("medianH").style.display = "block";
 document.getElementById("perC").style.display = "block";
 document.getElementById("incomeR").style.display = "block";
 document.getElementById("povertyLevel").style.display = "block";
+
 document.getElementById("totalD").style.display = "none";
 document.getElementById("AgeD").style.display = "none";
 document.getElementById("MedianD").style.display = "none";
 document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
+
 var width = 1500,
     height = 1000;
 
@@ -306,6 +338,7 @@ var rearrangedIdataCounty = [];
 
 
 function femaleAge() {
+manOrWoman = 2;
 //function for state data
 var Irequest = new XMLHttpRequest();
 Irequest.addEventListener("load", IpassData);
@@ -319,6 +352,7 @@ IrequestCounty.open("GET", "https://api.census.gov/data/2015/acs1?get=NAME,B0100
 IrequestCounty.send();  
 }
 function maleAge() {
+manOrWoman = 1;
 //function for state data
 var Irequest = new XMLHttpRequest();
 Irequest.addEventListener("load", IpassData);
@@ -388,9 +422,14 @@ function IpassData () {
   var Icolor = d3.scale.linear()
     .domain([d3.min(numberedIdata), d3.max(numberedIdata)])
     .range([1, 9])
-for (i=0; i<numberedIdata.length; i++) {
+	
+/*if (manOrWoman == 1) {for (i=0; i<numberedIdata.length; i++) {
+    storage[i] = "q1"+d3.round(Icolor(numberedIdata[i]))
+};}
+if (manOrWoman == 2) {for (i=0; i<numberedIdata.length; i++) {
     storage[i] = "q"+d3.round(Icolor(numberedIdata[i]))
-};
+};}	*/
+
 d3.select('#stateSelectBox').selectAll('option').data(stateNames).enter().append('option')
 	.html(function(d) { return d; })
 	.attr('value', function(d) {return d; })
@@ -531,9 +570,14 @@ document.getElementById("countySelectBox").disabled = false;
   var Icolor = d3.scale.linear()
     .domain([d3.min(numberedIdataCounty), d3.max(numberedIdataCounty)])
     .range([1, 9])
-for (i=0; i<rearrangedCountyID.length; i++) {
+	
+if (manOrWoman == 1) {for (i=0; i<rearrangedCountyID.length; i++) {
+   storage[i] = "q1"+d3.round(Icolor(rearrangedIdataCounty[i][1]))
+};}
+if (manOrWoman == 2) {for (i=0; i<rearrangedCountyID.length; i++) {
    storage[i] = "q"+d3.round(Icolor(rearrangedIdataCounty[i][1]))
-};
+};}	
+
 
    compareColorValue(storage, IdataCountyID);
     svg.insert("path", ".graticule")
@@ -624,7 +668,7 @@ for (i=0; i<rearrangedCountyID.length; i++) {
 						.select("#locationName")
 						.text(rearrangedIdataCounty[(rearrangedCountyID.indexOf(d.id))][0]);
 					//console.log(rearrangedIdataCounty)
-					document.getElementById("value").innerHTML = "$"+ rearrangedIdataCounty[(rearrangedCountyID.indexOf(d.id))][1];	
+					document.getElementById("value").innerHTML = "Median age of " + rearrangedIdataCounty[(rearrangedCountyID.indexOf(d.id))][1];	
 
 					//Show the tooltip
 					d3.select("#tooltip").classed("hidden", false);
@@ -659,9 +703,15 @@ var storage = [];
   var Icolor = d3.scale.linear()
     .domain([d3.min(numberedIdata), d3.max(numberedIdata)])
     .range([1, 9])
-for (i=0; i<numberedIdata.length; i++) {
+	
+if (manOrWoman == 1) {for (i=0; i<numberedIdata.length; i++) {
+    storage[i] = "q1"+d3.round(Icolor(numberedIdata[i]))
+};}	
+if (manOrWoman == 2) {for (i=0; i<numberedIdata.length; i++) {
     storage[i] = "q"+d3.round(Icolor(numberedIdata[i]))
-};
+};}	
+	
+
 
    svg.append("g")
       .attr("class", "states")
@@ -708,7 +758,7 @@ for (i=0; i<numberedIdata.length; i++) {
 						.select("#locationName")
 						.text(stateNames[1 + stateIdNumber.indexOf(d.id)]);
 					//console.log(rearrangedIdataCounty)
-					document.getElementById("value").innerHTML = "$"+ numberedIdata[stateIdNumber.indexOf(d.id)];	
+					document.getElementById("value").innerHTML = "Median age of " + numberedIdata[stateIdNumber.indexOf(d.id)];	
 
 					//Show the tooltip
 					d3.select("#tooltip").classed("hidden", false);
@@ -768,6 +818,8 @@ var max = null;
 var data = [];
 //console.log("The state of data when running new time"+data)
 if (ifCounty == 0) {
+   medianData = d3.round(medianData, 3);
+   console.log(medianData)
    data = [medianData, numberedIdata[locationID]];
    max = d3.max(numberedIdata); 
 } 
@@ -776,7 +828,7 @@ else {
    max = d3.max(numberedIdataCounty);
 }
 	// figure out maximum energy production
-	
+
 	var svgGraph = d3.select("svg").append("g")
                     .attr("transform", "translate(1250, 350)");
 
@@ -790,14 +842,14 @@ else {
 	
 	var xScale = d3.scale.ordinal()
 							.domain(d3.range(data.length))
-							.rangeRoundBands([0, chartWidth/2], 0.05);
+							.rangeRoundBands([20, chartWidth/2], 0.05);
 
 	var yScale = d3.scale.linear()
 							.domain([0, max])
-							.range([0, chartHeight]);
+							.range([chartHeight, 0]);
 							
 		d3.select('svg').selectAll('rect').remove();					
-							
+		svg.selectAll('.axis').remove();		
 			//Create bars
 		svgGraph.selectAll("rect")
 			   .data(data)
@@ -807,14 +859,15 @@ else {
 			   		return xScale(i);
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d);
+			   		return yScale(d);
 			   })
 			   .attr("width", "50")
 			   .attr("height", function(d) {
-			   		return yScale(d);
+			   		return chartHeight - yScale(d);
 			   })
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+					if (manOrWoman == 1) {return "#64BEB0"}
+					if (manOrWoman == 2) {return "#9B72D0"};
 			   });
 
 			//Create labels
@@ -830,7 +883,7 @@ else {
 			   		return xScale(i) + xScale.rangeBand() / 4 - 5;
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d) + 14;
+			   		return yScale(d) + 15;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
@@ -854,17 +907,16 @@ else {
 	d3.select("#bar1")
 	   .html(medianTitle)		   
 	d3.select("#bar2")
-	   .html(variableTitle)				   
-			   
-  
-	/*var yAxis = d3.svg.axis()
+	   .html(variableTitle)			
+	   
+var yAxis = d3.svg.axis()
 				.scale(yScale)
 				.orient('left');
 				
 		svgGraph.append("g")
 				.attr("class", "axis")
 				.attr("transform", "translate(" + padding + ",0)")
-				.call(yAxis);*/
+				.call(yAxis);		
 		
 }
 										
