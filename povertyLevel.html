@@ -954,8 +954,7 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 		d3.select('svg').selectAll('rect').remove();					
 		svg.selectAll('.axis').remove();					
 			//Create bars
-			
-var colorStorage = ["#FD70AA","#C37EB0","#995BA9","#6F3695","#461955"];				
+					
 			
 			
 		svgGraph.selectAll("rect")
@@ -972,7 +971,7 @@ var colorStorage = ["#FD70AA","#C37EB0","#995BA9","#6F3695","#461955"];
 			   .attr("height", function(d) {
 			   		return chartHeight - yScale(d);
 			   })
-			   .attr("fill", function(d, i) {return colorStorage[i]});
+			   .attr("fill", "＃C4CD38");
 
 			//Create labels
 		svgGraph.selectAll("text")
