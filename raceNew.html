@@ -2,17 +2,26 @@
 <meta charset="utf-8">
 <style>
 .menu {
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 30px;
 font-family: SF UI Text (Medium); 
 }
+.menu:hover{
+  color: #7890DB;
+}
 .submenu1{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
 }
 .submenu2{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
+}
+.submenu1:hover{
+  color: #7890DB;
+}
+.submenu2:hover{
+  color: #7890DB;
 }
 .counties {
   fill: none;
@@ -112,18 +121,18 @@ div.tooltip {
 
 
 
-.q1 { fill:rgb(120, 144, 219);}
-.q2 { fill:rgb(114, 208, 193);}
-.q3 { fill:rgb(83, 80, 137);}
-.q4 { fill:rgb(250, 128, 114);}
-.q5 { fill:rgb(250, 199, 100);}
-.q6 { fill:rgb(133, 140, 182);}
-.q7 { fill:rgb(217, 213, 217);}
-.q8 { fill:rgb(109, 213, 218);}
+.q1 { fill:#72D0C1;}
+.q2 { fill:rgb(83, 80, 137);}
+.q3 { fill:rgb(250, 128, 114);}
+.q4 { fill:rgb(250, 199, 100);}
+.q5 { fill:rgb(133, 140, 182);}
+.q6 { fill:rgb(217, 213, 217);}
+.q7 { fill:rgb(109, 213, 218);}
 
 
 </style>
 <body>
+
 <div id="tooltip" class="hidden">
 			<p><span id="locationName"><strong>STATE NAME NAME NAME </strong></span></p>
 			<p><span id="value">100</span></p>
@@ -189,133 +198,48 @@ div.tooltip {
 <script src="//d3js.org/topojson.v1.min.js"></script>
 <script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js"></script>
 
-</style>
-<body>
-<div id="tooltip" class="hidden">
-			<p><span id="locationName"><strong>STATE NAME NAME NAME </strong></span></p>
-			<p><span id="value">100</span></p>
-		</div>
-
-<!--"compare" icon-->
-<img src="https://239cda.github.io/Pro2/compare icon .png" style="position: absolute; left: 1400px; top: 300px">
-<img src="https://239cda.github.io/Pro2/compare icon selected.png" onclick="javascript:goToCompare();" style="position: absolute; left: 1400px; top: 300px">
-
-<!--logo-->
-
-<img src="https://239cda.github.io/Pro2/Logo.png" style="position: absolute; left: 80px; top: 30px">
-
-<!--go back button-->
-<a href= "http://pages.iu.edu/~nalghamd/maps/firstpage.html">
-<img src="https://239cda.github.io/Pro2/Back.png" style="position: absolute; left: 10px; top: 400px"></a>
-
-
-<!--labels for bar chart-->
-<text id='bar1' class = 'label' style= "position: absolute; left: 1260px; top: 660px"></text>
-<text id='bar2' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
-
-<!--labels for radio buttons-->
-<text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
-<text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
-
-<!--menu buttons on top-->
-<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
-<text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
-<text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
-<text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
-
-<!--submenu buttons on top-->
-<text id='totalD' class = 'submenu1' onclick = "population();" style= "display:none;cursor:pointer; position: absolute; left: 250px; top: 100px">Total Population</text>
-<text id='AgeD' class = 'submenu1' onclick = "femaleAgeDistribution();" style= "display:none; cursor:pointer; position: absolute; left: 450px; top: 100px">Age Distribution</br>by Sex</text>
-<text id='MedianD' class = 'submenu1' onclick = "totalMedianAge();" style= "display:none; cursor:pointer; position: absolute; left: 650px; top: 100px">Median Age</br>by Sex</text>
-<text id='RaceD' class = 'submenu1' onclick = "race();" style= "display:none; cursor:pointer; position: absolute; left: 850px; top: 100px">Race</text>
-<text id='educationD' class = 'submenu1' onclick = "education();" style= "display:none; cursor:pointer;position: absolute; left: 1000px; top: 100px">Education</br>Attainment</text>
-
-<text id='medianH' class = 'submenu2' onclick = "medianH();" style= "display:none;cursor:pointer; position: absolute; left: 450px; top: 100px">Median Household</br>Income</text>
-<text id='perC' class = 'submenu2' onclick = "perC();" style= "display:none; cursor:pointer; position: absolute; left: 650px; top: 100px">Per Capita</br>Income</text>
-<text id='incomeR' class = 'submenu2' onclick = "incomeR();" style= "display:none; cursor:pointer; position: absolute; left: 850px; top: 100px">Income to</br>Poverty Ratio</text>
-<text id='povertyLevel' class = 'submenu2' onclick = "povertyLevel();" style= "display:none; cursor:pointer; position: absolute; left: 1050px; top: 100px">Poverty Level by</br>Place of Birth</text>
-
-<!--radio buttons and dropdown box-->
-<select disabled id="countySelectBox" name = "selectBox" style="position: absolute; left: 1400px; top: 260px">
-<option selected="selected" hidden >---select a county---</option></select>
-<input type="radio" id ="choroState" name ="radioChoro" onclick = "choroStateOn();" value="bar" checked style="position: absolute; left: 1230px; top: 200px"> 
-<input type="radio" id ="choroCounty" name ="radioChoro" onclick = "choroCountyOn();" value="bar" style="position: absolute; left: 1330px; top: 200px">
-<!--implement this if have time
-<input type="radio" id ="totalAgeRadio" name ="radioData" onclick = "totalAgeDistribution();" value="bar" style="position: absolute; left: 1200px; top: 200px">
--->
-<select id="stateSelectBox" name = "selectBox" style="position: absolute; left: 1230px; top: 260px">
-<option selected="selected" hidden >---select a state---</option></select>
-
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/d3-collection.v1.min.js"></script>
-<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-<script src="https://d3js.org/d3-request.v1.min.js"></script>
-<script src="//d3js.org/topojson.v1.min.js"></script>
-<script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js"></script>
-
 <script>
-function population(){
-window.location = "https://239cda.github.io/Pro2/totalPopulation.html"}
-function femaleAgeDistribution(){
-window.location = "https://239cda.github.io/Pro2/ageD1.html"
-}
-function totalMedianAge(){
-window.location = "https://239cda.github.io/Pro2/medianAgeNew.html"
-}
-function race() {
-window.location = "https://239cda.github.io/Pro2/raceNew.html"
-}
-function education() {
-window.location = "https://239cda.github.io/Pro2/education.html"
-}
-function medianH(){
-window.location = "https://239cda.github.io/Pro2/income-github.html"
-}
-function perC(){
-window.location = "https://239cda.github.io/Pro2/perCapitaIncome.html"
-}
-function incomeR(){
-window.location = "https://239cda.github.io/Pro2/povertyRatio.html"
-}
-function povertyLevel(){
-window.location = "https://239cda.github.io/Pro2/povertyRatio.html"
-}
-function work(){
-window.location = "https://239cda.github.io/Pro2/timeToWork.html"
-}
-function trans(){
-window.location = "https://239cda.github.io/Pro2/transportation.html"
-}
 function submenu1() {
+document.getElementById("demo").style.color = "#7890DB"
+document.getElementById("income").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("totalD").style.display = "block";
 document.getElementById("AgeD").style.display = "block";
 document.getElementById("MedianD").style.display = "block";
 document.getElementById("RaceD").style.display = "block";
 document.getElementById("educationD").style.display = "block";
+
 document.getElementById("medianH").style.display = "none";
 document.getElementById("perC").style.display = "none";
 document.getElementById("incomeR").style.display = "none";
 document.getElementById("povertyLevel").style.display = "none";
 }
 function submenu2() {
+document.getElementById("income").style.color = "#7890DB";
+document.getElementById("demo").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("medianH").style.display = "block";
 document.getElementById("perC").style.display = "block";
 document.getElementById("incomeR").style.display = "block";
 document.getElementById("povertyLevel").style.display = "block";
+
 document.getElementById("totalD").style.display = "none";
 document.getElementById("AgeD").style.display = "none";
 document.getElementById("MedianD").style.display = "none";
 document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
+
 var width = 1500,
     height = 1000;
 
 var projection = d3.geo.albersUsa()
     .scale(1200)
-    .translate([width / 4 + 300, height / 2 - 10]);
-
+    .translate([width / 4 + 100, height / 2 - 50]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -1030,7 +954,7 @@ var maxes = [];
    for (i=0;i<data[0].length;i++){
    data.push(data[0][i]);
    }
-   //data.splice(0,1);
+   data.splice(0,1);
 maximumBarCompareWithin = d3.max(maxes); 
 }
 else {
@@ -1061,17 +985,17 @@ maximumBarCompareWithin = d3.max(maxess);
 //trim data
 
 for (i=0;i<data.length;i++){
-    data[i] = (data[i].toPrecision(3)) * 100; 
+    data[i] = data[i]* 100; 
 	data[i] = data[i].toString();
 	data[i] = data[i].slice(0, 4);
+	
 }
 maximumBarCompareWithin = maximumBarCompareWithin * 100;
 
 	// figure out maximum energy production
 
 	var svgGraph = d3.select("svg").append("g")
-                    .attr("transform", "translate(1250, 350)");
-
+                    .attr("transform", "translate(1100, 350)");
 	var padding = 20;
 
 	// chart size 
@@ -1082,15 +1006,16 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 	
 	var xScale = d3.scale.ordinal()
 							.domain(d3.range(data.length))
-							.rangeRoundBands([0, chartWidth, 0.9]);
+							.rangeRoundBands([20, chartWidth, 0.9]);
 
 	var yScale = d3.scale.linear()
 							.domain([0, maximumBarCompareWithin])
-							.range([0, chartHeight]);
+							.range([chartHeight, 0]);
 							
 		d3.select('svg').selectAll('rect').remove();					
+			svg.selectAll('.axis').remove();
 			
-        console.log(maximumBarCompareWithin)			
+    var colorStorage = ["#72D0C1","#535089","#FA8072","#FAC764","#858CB6","#D9D5D9","#6DD5DA"];		
 			//Create bars
 		svgGraph.selectAll("rect")
 			   .data(data)
@@ -1100,14 +1025,14 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i);
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d);
+			   		return yScale(d);
 			   })
 			   .attr("width", xScale.rangeBand())
 			   .attr("height", function(d) {
-			   		return yScale(d);
+			   		return chartHeight - yScale(d);
 			   })
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+			   .attr("fill", function(d, i) {
+					return colorStorage[i];
 			   });
 
 			//Create labels
@@ -1123,13 +1048,20 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i) + xScale.rangeBand() / 4;
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d) + 15;
+			   		return yScale(d) + 15;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
 			   .attr("fill", "white");
 	
-
+var yAxis = d3.svg.axis()
+				.scale(yScale)
+				.orient('left');
+				
+		svgGraph.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);		
 	   
 }
 ///function for sending selected location info in the form of index
