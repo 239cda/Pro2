@@ -2,17 +2,26 @@
 <meta charset="utf-8">
 <style>
 .menu {
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 30px;
 font-family: SF UI Text (Medium); 
 }
+.menu:hover{
+  color: #7890DB;
+}
 .submenu1{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
 }
 .submenu2{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
+}
+.submenu1:hover{
+  color: #7890DB;
+}
+.submenu2:hover{
+  color: #7890DB;
 }
 .counties {
   fill: none;
@@ -111,16 +120,15 @@ div.tooltip {
 
 
 
+.q1 { fill:rgb(228, 235, 119);}
+.q2 { fill:rgb(196, 230, 137);}
+.q3 { fill:rgb(165, 225, 155);}
+.q4 { fill:rgb(134, 221, 173);}
+.q5 { fill:rgb(103, 216, 192);}
+.q6 { fill:rgb(72, 212, 210);}
+.q7 { fill:rgb(41, 207, 228);}
+.q8 { fill:rgb(10, 203, 247);}
 
-.q1 { fill:rgb(197, 171, 226);}
-.q2 { fill:rgb(183, 155, 217);}
-.q3 { fill:rgb(170, 139, 207);}
-.q4 { fill:rgb(157, 123, 198);}
-.q5 { fill:rgb(143, 107, 188);}
-.q6 { fill:rgb(130, 91, 178);}
-.q7 { fill:rgb(116, 75, 169);}
-.q8 { fill:rgb(103, 59, 159);}
-.q9 { fill:rgb(90, 44, 150);}
 
 </style>
 <body>
@@ -145,15 +153,20 @@ div.tooltip {
 <img src="https://239cda.github.io/Pro2/ratio of income legend.png" style="position: absolute; left: 1250px; top: 700px">
 
 <!--labels for bar chart-->
-<text id='bar1' class = 'label' style= "position: absolute; left: 1260px; top: 660px"></text>
-<text id='bar2' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
-
+<text id='bar1' class = 'label' style= "position: absolute; left: 1180px; top: 660px"></text>
+<text id='bar2' class = 'label' style= "position: absolute; left: 1225px; top: 660px"></text>
+<text id='bar3' class = 'label' style= "position: absolute; left: 1275px; top: 660px"></text>
+<text id='bar4' class = 'label' style= "position: absolute; left: 1325px; top: 660px"></text>
+<text id='bar5' class = 'label' style= "position: absolute; left: 1368px; top: 660px"></text>
+<text id='bar6' class = 'label' style= "position: absolute; left: 1422px; top: 660px"></text>
+<text id='bar7' class = 'label' style= "position: absolute; left: 1465px; top: 660px"></text>
+<text id='bar8' class = 'label' style= "position: absolute; left: 1520px; top: 660px"></text>
 <!--labels for radio buttons-->
 <text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
 <text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
 
 <!--menu buttons on top-->
-<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
+<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px; color:#7890DB">Demographics</text>
 <text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
 <text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
 <text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
@@ -223,33 +236,45 @@ function trans(){
 window.location = "https://239cda.github.io/Pro2/transportation.html"
 }
 function submenu1() {
+document.getElementById("demo").style.color = "#7890DB"
+document.getElementById("income").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("totalD").style.display = "block";
 document.getElementById("AgeD").style.display = "block";
 document.getElementById("MedianD").style.display = "block";
 document.getElementById("RaceD").style.display = "block";
 document.getElementById("educationD").style.display = "block";
+
 document.getElementById("medianH").style.display = "none";
 document.getElementById("perC").style.display = "none";
 document.getElementById("incomeR").style.display = "none";
 document.getElementById("povertyLevel").style.display = "none";
 }
 function submenu2() {
+document.getElementById("income").style.color = "#7890DB";
+document.getElementById("demo").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("medianH").style.display = "block";
 document.getElementById("perC").style.display = "block";
 document.getElementById("incomeR").style.display = "block";
 document.getElementById("povertyLevel").style.display = "block";
+
 document.getElementById("totalD").style.display = "none";
 document.getElementById("AgeD").style.display = "none";
 document.getElementById("MedianD").style.display = "none";
 document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
-var width = 1500,
+var width = 2000,
     height = 1000;
 
 var projection = d3.geo.albersUsa()
     .scale(1200)
-    .translate([width / 4 + 300, height / 2 - 10]);
+    .translate([(width - 500) / 4 + 300, height / 2 - 10]);
 
 
 var path = d3.geo.path()
@@ -982,7 +1007,7 @@ var maxes = [];
    for (i=0;i<data[0].length;i++){
    data.push(data[0][i]);
    }
-   //data.splice(0,1);
+   data.splice(0,1);
 maximumBarCompareWithin = d3.max(maxes); 
 }
 else {
@@ -1003,7 +1028,7 @@ if (maxes.length<1) {
    for (i=0;i<data[0].length;i++){
    data.push(data[0][i]);
    }
-   data.splice(0,1);
+   
 maximumBarCompareWithin = d3.max(maxes); 
 
 }
@@ -1011,7 +1036,7 @@ maximumBarCompareWithin = d3.max(maxes);
 //trim data
 
 for (i=0;i<data.length;i++){
-    data[i] = (data[i].toPrecision(3)) * 100; 
+    data[i] = data[i]* 100; 
 	data[i] = data[i].toString();
 	data[i] = data[i].slice(0, 4);
 }
@@ -1020,7 +1045,7 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 	// figure out maximum energy production
 
 	var svgGraph = d3.select("svg").append("g")
-                    .attr("transform", "translate(1250, 350)");
+                    .attr("transform", "translate(1150, 350)");
 
 	var padding = 20;
 
@@ -1032,14 +1057,15 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 	
 	var xScale = d3.scale.ordinal()
 							.domain(d3.range(data.length))
-							.rangeRoundBands([0, chartWidth, 0.9]);
+							.rangeRoundBands([20, chartWidth, 0.9]);
 
 	var yScale = d3.scale.linear()
 							.domain([0, maximumBarCompareWithin])
-							.range([0, chartHeight]);
+							.range([chartHeight, 0]);
 							
 		d3.select('svg').selectAll('rect').remove();					
-							
+		svg.selectAll('.axis').remove();
+		
 			//Create bars
 		svgGraph.selectAll("rect")
 			   .data(data)
@@ -1049,14 +1075,14 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i);
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d);
+			   		return yScale(d);
 			   })
 			   .attr("width", xScale.rangeBand())
 			   .attr("height", function(d) {
-			   		return yScale(d);
+			   		return chartHeight - yScale(d);
 			   })
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+					return "#C4CD38";
 			   });
 
 			//Create labels
@@ -1072,25 +1098,37 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   		return xScale(i) + xScale.rangeBand() / 4;
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d) + 15;
+			   		return yScale(d) + 15;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
 			   .attr("fill", "white");
 			   
+var yAxis = d3.svg.axis()
+				.scale(yScale)
+				.orient('left');
+				
+		svgGraph.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);				   
 			   
-	//title for each bar
-	/*var medianTitle = null;
-	var variableTitle = null;
-	if (stateOrCounty == 1) {
-
-	}
-	else if (stateOrCounty == 2) {
-	}
-	d3.select("#bar1")
-	   .html(medianTitle)		   
+d3.select("#bar1")
+	   .html("≤.50")		   
 	d3.select("#bar2")
-	   .html(variableTitle)		*/
+	   .html("≤.99")	
+	d3.select("#bar3")
+	   .html("≤1.49")		   
+	d3.select("#bar4")
+	   .html("≤1.99")	
+	d3.select("#bar5")
+	   .html("≤2.99")		   
+	d3.select("#bar6")
+	   .html("≤3.99")	
+	d3.select("#bar7")
+	   .html("≤4.99")		   
+	d3.select("#bar8")
+	   .html("5.00 and over")	
 
 
 
@@ -1115,3 +1153,5 @@ d3.select(self.frameElement).style("height", height + "px");
 
 
 </script>
+</body>
+</html>
