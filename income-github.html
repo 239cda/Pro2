@@ -2,17 +2,26 @@
 <meta charset="utf-8">
 <style>
 .menu {
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 30px;
 font-family: SF UI Text (Medium); 
 }
+.menu:hover{
+  color: #7890DB;
+}
 .submenu1{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
 }
 .submenu2{
-fill: #8C8C8C;
+color: #8C8C8C;
 font-size: 18px;
+}
+.submenu1:hover{
+  color: #7890DB;
+}
+.submenu2:hover{
+  color: #7890DB;
 }
 .counties {
   fill: none;
@@ -153,7 +162,7 @@ div.tooltip {
 <text id='radioText2' class = 'label' style= "position: absolute; left: 1280px; top: 175px">County Map</text>
 
 <!--menu buttons on top-->
-<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px">Demographics</text>
+<text id='demo' class = 'menu' onclick="submenu1();" style= "cursor:pointer;position: absolute; left: 250px; top: 50px; color:#7890DB">Demographics</text>
 <text id='income' class = 'menu' onclick="submenu2();" style= "cursor:pointer;position: absolute; left: 500px; top: 50px">Income</text>
 <text id='time' class = 'menu' onclick="work();" style= "cursor:pointer;position: absolute; left: 650px; top: 50px">Time to Work</text>
 <text id='trans' class = 'menu' onclick="trans();" style= "cursor:pointer;position: absolute; left: 900px; top: 50px">Transportation</text>
@@ -223,27 +232,40 @@ function trans(){
 window.location = "https://239cda.github.io/Pro2/transportation.html"
 }
 function submenu1() {
+document.getElementById("demo").style.color = "#7890DB"
+document.getElementById("income").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("totalD").style.display = "block";
 document.getElementById("AgeD").style.display = "block";
 document.getElementById("MedianD").style.display = "block";
 document.getElementById("RaceD").style.display = "block";
 document.getElementById("educationD").style.display = "block";
+
 document.getElementById("medianH").style.display = "none";
 document.getElementById("perC").style.display = "none";
 document.getElementById("incomeR").style.display = "none";
 document.getElementById("povertyLevel").style.display = "none";
 }
 function submenu2() {
+document.getElementById("income").style.color = "#7890DB";
+document.getElementById("demo").style.color = "#8C8C8C";
+document.getElementById("trans").style.color = "#8C8C8C";
+document.getElementById("time").style.color = "#8C8C8C";
+
 document.getElementById("medianH").style.display = "block";
 document.getElementById("perC").style.display = "block";
 document.getElementById("incomeR").style.display = "block";
 document.getElementById("povertyLevel").style.display = "block";
+
 document.getElementById("totalD").style.display = "none";
 document.getElementById("AgeD").style.display = "none";
 document.getElementById("MedianD").style.display = "none";
 document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
+
 var width = 1500,
     height = 1000;
 
@@ -758,14 +780,14 @@ else {
 	
 	var xScale = d3.scale.ordinal()
 							.domain(d3.range(data.length))
-							.rangeRoundBands([0, chartWidth/2], 0.05);
+							.rangeRoundBands([20, chartWidth/2], 0.05);
 
 	var yScale = d3.scale.linear()
 							.domain([0, max])
-							.range([0, chartHeight]);
+							.range([chartHeight, 0]);
 							
 		d3.select('svg').selectAll('rect').remove();					
-							
+		svg.selectAll('.axis').remove();					
 			//Create bars
 		svgGraph.selectAll("rect")
 			   .data(data)
@@ -775,14 +797,14 @@ else {
 			   		return xScale(i);
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d);
+			   		return yScale(d);
 			   })
 			   .attr("width", "50")
 			   .attr("height", function(d) {
-			   		return yScale(d);
+			   		return chartHeight - yScale(d);
 			   })
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+					return "#8A9300";
 			   });
 
 			//Create labels
@@ -798,7 +820,7 @@ else {
 			   		return xScale(i) + xScale.rangeBand() / 4 - 5;
 			   })
 			   .attr("y", function(d) {
-			   		return chartHeight - yScale(d) + 14;
+			   		return yScale(d) + 14;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
@@ -817,7 +839,14 @@ else {
 	variableTitle = locationID[0];
 
 	}
-	
+	var yAxis = d3.svg.axis()
+				.scale(yScale)
+				.orient('left');
+				
+		svgGraph.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);		
 	
 	d3.select("#bar1")
 	   .html(medianTitle)		   
