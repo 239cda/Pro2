@@ -154,8 +154,13 @@ div.tooltip {
 <img src="https://239cda.github.io/Pro2/race distribution legend.png" style="position: absolute; left: 1250px; top: 700px">
 
 <!--labels for bar chart-->
-<text id='bar1' class = 'label' style= "position: absolute; left: 1260px; top: 660px"></text>
-<text id='bar2' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
+<text id='bar1' class = 'label' style= "position: absolute; left: 1180px; top: 660px"></text>
+<text id='bar2' class = 'label' style= "position: absolute; left: 1240px; top: 660px"></text>
+<text id='bar3' class = 'label' style= "position: absolute; left: 1280px; top: 660px"></text>
+<text id='bar4' class = 'label' style= "position: absolute; left: 1350px; top: 660px"></text>
+<text id='bar5' class = 'label' style= "position: absolute; left: 1400px; top: 660px"></text>
+<text id='bar6' class = 'label' style= "position: absolute; left: 1460px; top: 660px"></text>
+<text id='bar7' class = 'label' style= "position: absolute; left: 1505px; top: 660px"></text>
 
 <!--labels for radio buttons-->
 <text id='radioText1' class = 'label' style= "position: absolute; left: 1180px; top: 175px">State Map</text>
@@ -199,6 +204,40 @@ div.tooltip {
 <script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js"></script>
 
 <script>
+
+function population(){
+window.location = "https://239cda.github.io/Pro2/totalPopulation.html"}
+function femaleAgeDistribution(){
+window.location = "https://239cda.github.io/Pro2/ageD1.html"
+}
+function totalMedianAge(){
+window.location = "https://239cda.github.io/Pro2/medianAgeNew.html"
+}
+function race() {
+window.location = "https://239cda.github.io/Pro2/raceNew.html"
+}
+function education() {
+window.location = "https://239cda.github.io/Pro2/education.html"
+}
+function medianH(){
+window.location = "https://239cda.github.io/Pro2/income-github.html"
+}
+function perC(){
+window.location = "https://239cda.github.io/Pro2/perCapitaIncome.html"
+}
+function incomeR(){
+window.location = "https://239cda.github.io/Pro2/povertyRatio.html"
+}
+function povertyLevel(){
+window.location = "https://239cda.github.io/Pro2/povertyRatio.html"
+}
+function work(){
+window.location = "https://239cda.github.io/Pro2/timeToWork.html"
+}
+function trans(){
+window.location = "https://239cda.github.io/Pro2/transportation.html"
+}
+
 function submenu1() {
 document.getElementById("demo").style.color = "#7890DB"
 document.getElementById("income").style.color = "#8C8C8C";
@@ -234,12 +273,13 @@ document.getElementById("RaceD").style.display = "none";
 document.getElementById("educationD").style.display = "none";
 }
 
-var width = 1500,
+var width = 2000,
     height = 1000;
 
 var projection = d3.geo.albersUsa()
     .scale(1200)
-    .translate([width / 4 + 100, height / 2 - 50]);
+    .translate([(width-500) / 4 + 300, height / 2 - 10]);
+
 
 var path = d3.geo.path()
     .projection(projection);
@@ -995,7 +1035,7 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 	// figure out maximum energy production
 
 	var svgGraph = d3.select("svg").append("g")
-                    .attr("transform", "translate(1100, 350)");
+                    .attr("transform", "translate(1150, 350)");
 	var padding = 20;
 
 	// chart size 
@@ -1053,6 +1093,24 @@ maximumBarCompareWithin = maximumBarCompareWithin * 100;
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
 			   .attr("fill", "white");
+	
+d3.select("#bar1")
+	   .html("White")		   
+	d3.select("#bar2")
+	   .html("Black")	
+	d3.select("#bar3")
+	   .html("A.Indian")		   
+	d3.select("#bar4")
+	   .html("Asian")	
+	d3.select("#bar5")
+	   .html("Pacific")		   
+	d3.select("#bar6")
+	   .html("Others")	
+	d3.select("#bar7")
+	   .html("Two or more races")		
+	
+	
+	
 	
 var yAxis = d3.svg.axis()
 				.scale(yScale)
