@@ -392,12 +392,12 @@ function IpassPopDataCounty (error, results) {
 function prepareVariables() {
 //state data for male and female
      d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_002E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_026E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_002E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_026E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
           .awaitAll(IpassPopData)
 	 d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_002E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_026E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_002E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_026E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
           .awaitAll(IpassPopDataCounty)	  
 }
 //function for state data
@@ -405,142 +405,142 @@ function maleAgeDistribution (){
 needNormalize = true;
 	manOrWoman = 1;
      d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_003E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_004E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_005E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_006E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_005E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_006E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_007E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_008E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_009E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_007E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_008E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_009E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combine
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_010E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_011E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_010E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_011E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_012E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_013E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_014E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_012E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_013E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_014E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_015E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_016E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_017E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_015E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_016E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_017E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_018E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_019E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_020E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_021E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_022E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_023E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_018E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_019E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_020E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_021E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_022E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_023E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_024E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_025E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_024E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_025E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .awaitAll(calculateData);
 }		  
 function maleAgeDistributionCounty (){
 	manOrWoman = 1;
 	d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_003E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_004E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_003E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_004E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_005E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_006E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_005E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_006E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_007E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_008E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_009E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_007E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_008E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_009E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_010E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_011E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_010E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_011E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_012E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_013E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_014E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_012E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_013E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_014E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_015E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_016E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_017E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_015E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_016E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_017E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_018E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_019E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_020E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_021E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_022E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_023E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_018E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_019E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_020E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_021E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_022E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_023E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_024E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_025E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_024E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_025E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .awaitAll(calculateDataCounty);	  	  
 }
 function femaleAgeDistribution (){
 needNormalize = true;
 	manOrWoman = 2;
      d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_027E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_028E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_029E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_030E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_029E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_030E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_031E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_032E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_033E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_031E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_032E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_033E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_034E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_035E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_034E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_035E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_036E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_037E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_038E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_036E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_037E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_038E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_039E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_040E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_041E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_039E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_040E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_041E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_042E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_043E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_044E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_045E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_046E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_047E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_042E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_043E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_044E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_045E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_046E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_047E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_048E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_049E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_048E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_049E&for=state:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .awaitAll(calculateData);
 }		  
 function femaleAgeDistributionCounty(){
 	manOrWoman = 2;
 	d3.queue()
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_027E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_028E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_027E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_028E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_029E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_030E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_029E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_030E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_031E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_032E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_033E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_031E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_032E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_033E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_034E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_035E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_034E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_035E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_036E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_037E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_038E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_036E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_037E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_038E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_039E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_040E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_041E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_039E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_040E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_041E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_042E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_043E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_044E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_045E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_046E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_047E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_042E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_043E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_044E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_045E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_046E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_047E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  //above should be combined
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_048E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
-		  .defer(d3.request, "https://api.census.gov/data/2015/acs1?get=NAME,B01001_049E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_048E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
+		  .defer(d3.request, "https://api.census.gov/data/2015/acs/acs1?get=NAME,B01001_049E&for=county:*&key=39e1668f1b9faef45a2da370fed5d9acc7083138")
 		  .awaitAll(calculateDataCounty);	  
 		 		  
 }
